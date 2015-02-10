@@ -39,7 +39,7 @@ def findTopTweets(awards,nominees):
 	start_time = time.time()
 	print "Searching for top tweets..."
 	data = []
-	with open('gg15mini.json') as f:
+	with open('../gg15mini.json') as f:
 	    for line in f:
 	        data.append(json.loads(line))
 	award_stopsets = []
