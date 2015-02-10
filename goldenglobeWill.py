@@ -35,11 +35,11 @@ def removeIgnored(phrase):
 		stopset.add(words[i])
 	return stopset
 
-def findTopTweets(awards,nominees):
+def findTopTweets(awards,nominees,inputFile):
 	start_time = time.time()
 	print "Searching for top tweets..."
 	data = []
-	with open('../gg15mini.json') as f:
+	with open('../' + inputFile) as f:
 	    for line in f:
 	        data.append(json.loads(line))
 	award_stopsets = []
@@ -117,30 +117,51 @@ def findTopTweets(awards,nominees):
 	# return topUni,topBi
 	elapsed_time = time.time() - start_time
 	print "Search length: " + str(elapsed_time)
-	print winners
+	#print winners
 	return winners
 
 def findWinner(topUnigrams, topBigrams, nominees):
+	print topUnigrams
+	print topBigrams
 	singleWordNom = False
 	for nom in nominees: #search nominees to see if any are single words
 		checkNom = nltk.word_tokenize(nom)
-		if len(checkNom)!=0:
+		if len(checkNom)==1:
 			singleWordNom= True
+			print "Using unigrams instead..."
 			break
-	for i in range(0,len(topUnigrams)):
-		for j in range (0,len(nominees)):
-			biPart1 = (topBigrams[i][0])[0]
-			biPart2 = (topBigrams[i][0])[1]
-			uni = topUnigrams[i][0]
-			nominee = nominees[j].lower()
-			if singleWordNom:#use unigram search if single words nominee
+	# for i in range(0,len(topUnigrams)):
+	# 	for j in range (0,len(nominees)):
+	# 		biPart1 = (topBigrams[i][0])[0]
+	# 		biPart2 = (topBigrams[i][0])[1]
+	# 		uni = topUnigrams[i][0]
+	# 		nominee = nominees[j].lower()
+	# 		if singleWordNom:#use unigram search if single words nominee
+	# 			if nominee.find(uni)!=-1:
+	# 				return nominees[j]
+	# 				break
+	# 		else:
+	# 			if nominee.find(biPart1)!= -1 or nominee.find(biPart2)!=-1:
+	# 				return nominees[j]
+	# 				break
+	if singleWordNom:
+		for i in range(0,len(topUnigrams)):
+			for j in range (0,len(nominees)):
+				uni = topUnigrams[i][0]
+				nominee = nominees[j].lower()
 				if nominee.find(uni)!=-1:
 					return nominees[j]
 					break
-			else:
+	else:
+		for i in range(0,len(topBigrams)):
+			for j in range (0,len(nominees)):
+				biPart1 = (topBigrams[i][0])[0]
+				biPart2 = (topBigrams[i][0])[1]
+				nominee = nominees[j].lower()
 				if nominee.find(biPart1)!= -1 or nominee.find(biPart2)!=-1:
 					return nominees[j]
 					break
+				
 
 def findHost(topBigrams):
 	for i in range(0,len(topBigrams)):
