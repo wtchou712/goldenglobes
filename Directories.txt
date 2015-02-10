@@ -1,0 +1,57 @@
+directory = {'Richard Linklater': 'Boyhood', 'Wes Anderson' : 'The Grand Budapest Hotel', 'Ava DuVernay' : 'Selma', 'David Fincher' : 'Gone Girl',
+'Alejandro Gonzalez Inarritu' : 'Birdman','Eddie Redmayne' : 'The Theory of Everything', 'Steve Carell' : 'Foxcatcher', 'Benedict Cumberbatch' : 'The Imitation Game', 
+'Jake Gyllenhaal' : 'Nightcrawler', David Oyelowo' : 'Selma','Julianne Moore' : 'Still Alice', 'Jennifer Aniston' : 'Cake',' Felicity Jones' : 'The Theory of Everything, 
+'Rosamund Pike' : 'Gone Girl', 'Reese Witherspoon': 'Wild','Michael Keaton' : 'Birdman', 'Ralph Fiennes' : The Grand Budapest Hotel', 'Bill Murray' : 'St. Vincent', 
+'Joaquin Phoenix' : Inherent Vice', 'Christoph Waltz' : 'Big Eyes','Amy Adams' : 'Big Eyes', 'Emily Blunt' : 'Into the Woods', 'Helen Mirren' : 'The Hundred-Foot Journey', 
+Julianne Moore' : 'Maps to the Stars', 'Quvenzhane Wallis' : 'Annie', 'Patricia Arquette' : 'Boyhood', 'Jessica Chastain' : 'A Most Violent Year', 
+Keira Knightley' : 'The Imitation Game', 'Emma Stone' : 'Birdman', 'Meryl Streep' : 'Into the Woods','J.K. Simmons' : 'Whiplash', 'Robert Duvall' : 'The Judge', 
+'Ethan Hawke' : 'Boyhood', 'Edward Norton' : 'Birdman', 'Mark Ruffalo': 'Foxcatcher' ,'Alejandro Gonzalez Inarritu, Nicolas Giacobone, Armando Bo, Alexander Dinelaris, Jr.': 'Birdman',
+'Wes Anderson' : 'The Grand Budapest Hotel', 'Gillian Flynn' : 'Gone Girl', 'Richard Linklater': 'Boyhood', Graham Moore':'The Imitation Game',
+'Johann Johannsson': 'The Theory of Everything', 'Alexandre Desplat': 'The Imitation Game', 'Trent Reznore, Atticus Ross': 'Gone Girl', 'Antonio Sanchez' : 'Birdman', 
+'Hans Zimmer' : 'Interstellar', 'Glory': 'Selma', 'Big Eyes': 'Big Eyes', 'Mercy Is': 'Noah', 'Opportunity' : 'Annie', 'Yellow Flicker Beat': 'The Hunger Games: Mockingjay - Part 1',
+'Ruth Wilson': 'The Affair', 'Claire Danes':'Homeland', 'Viola Davis': 'How to Get Away With Murder', 'Julianna Margulies': 'The Good Wife', 'Robin Wright': 'House of Cards',
+Kevin Spacey': 'House of Cards', 'Clive Owen' : 'Liev Schreiber' , 'Liev Schreiber': 'Ray Donovan', 'James Spader': 'The Blacklist', 'Dominic West': 'The Affair',
+'Gina Rodriguez': 'Jane the Virgin', 'Lena Dunham': 'Girls', 'Edie Falco' : 'Nurse Jackie', 'Julia Louis-Dreyfus' : 'Veep', 'Taylor Schilling': 'Orange is the New Black',
+'Jeffrey Tambor': 'Transparent', 'Louis C. K.': 'Louie', 'Don Cheadle': 'House of Lies', 'Ricky Gervais': 'Derek', 'William H. Macy': 'Shameless','Maggie Gyllenhaal' : 'The Honourable Woman',
+'Jessica Lange': 'American Horror Story: Freak Show', 'Frances McDormand' : 'Olive Kitteridge', "Frances O'Connor" : 'The Missing', 'Allison Tolman': 'Fargo', 
+'Billy Bob Thornton':'Fargo', 'Martin Freeman' : 'Fargo', 'Wood Harrelson' : 'True Detective', 'Matthew McConaughey' : 'True Detective', 'Mark Ruffalo': 'The Normal Heart',
+'Joanna Froggatt': 'Downton Abbey', 'Uzo Aduba': 'Orange Is the New Black', 'Kathy Bates': 'American Horror Story: Freak Show', 'Allison Janney': 'Mom', 
+'Michelle Monaghan': 'True Detective','Matt Bomer': 'The Normal Heart', 'Alan Cumming': 'The Good Wife', 'Colin Hanks' : 'Fargo', 'Bill Murray' : 'Olive Kitteridge', 'Jon Voight': 'Ray Donovan'}
+
+MPDrama = ['Boyhood', 'Foxcatcher', 'The Imitation Game', 'Selma', 'The Theory of Everything']
+MPMusicComedy = ['The Grand Budapest Hotel','Birdman','Into the Woods', 'Pride','St. Vincent']
+MPDirector = ['Richard Linklater', 'Wes Anderson', 'Ava DuVernay', 'David Fincher', 'Alejandro Gonzalez Inarritu']
+MPActressDrama = ['Julianne Moore', 'Jennifer Aniston',' Felicity Jones', 'Rosamund Pike', 'Reese Witherspoon']
+MPActorDrama = ['Eddie Redmayne', 'Steve Carell', 'Benedict Cumberbatch', 'Jake Gyllenhaal', David Oyelowo']
+MPActorMusicComedy = ['Michael Keaton', 'Ralph Fiennes', 'Bill Murray', 'Joaquin Phoenix', 'Christoph Waltz']
+MPActressMusicComedy = ['Amy Adams', 'Emily Blunt', 'Helen Mirren', Julianne Moore', 'Quvenzhane Wallis']
+MPSupportingActress = ['Patricia Arquette', 'Jessica Chastain', Keira Knightley', 'Emma Stone', 'Meryl Streep']
+MPSupportingActor = ['J.K. Simmons, 'Robert Duvall', 'Ethan Hawke', 'Edward Norton', 'Mark Ruffalo']
+MPScreenplay = ['Alejandro Gonzalez Inarritu, Nicolas Giacobone, Armando Bo, Alexander Dinelaris, Jr.', 'Wes Anderson', 'Gillian Flynn', 'Richard Linklater', Graham Moore']
+MPForeign = ['Leviathan', 'Force Majeure', 'Gett: The Trial of Viviane Amsalem', 'Ida', 'Tangerines']
+MPAnimated = ['How to Train Your Dragon 2'. 'Big Hero 6', 'The Book of Life', 'The Boxtrolls', 'The Lego Movie']
+MPSong = ['Glory', 'Big Eyes', 'Mercy Is', 'Opportunity', 'Yellow Flicker Beat']
+MPScore = ['Johann Johannsson', 'Alexandre Desplat', 'Trent Reznore, Atticus Ross', 'Antonio Sanchez', 'Hans Zimmer']
+
+TVMusicComedy = ['Transparent', 'Girls', 'Jane the Virgin', 'Orange Is the New Black', 'Silicon Valley']
+TVDrama = ['The Affair', 'Game of Thrones', 'Downton Abbey', 'The Good Wife', 'House of Cards']
+TVActressDrama = ['Ruth Wilson', 'Claire Danes', 'Viola Davis', 'Julianna Margulies', 'Robin Wright']
+TVActorDrama = ['Kevin Spacey', 'Clive Owen', 'Liev Schreiber', 'James Spader', 'Dominic West']
+TVActressComedy = ['Gina Rodriguez', 'Lena Dunham', 'Edie Falco', 'Julia Louis-Dreyfus', 'Taylor Schilling']
+TVActorComedy = ['Jeffrey Tambor', 'Louis C. K.', 'Don Cheadle', 'Ricky Gervais', 'William H. Macy']
+TVMiniseries = ['Fargo', 'The Missing', 'The Normal Heart', 'Olive Kitteridge', 'True Detective']
+TVActressMiniseries = ['Maggie Gyllenhaal', 'Jessica Lange', 'Frances McDormand', "Frances O'Connor", 'Allison Tolman']
+TVActorMiniSeries = ['Billy Bob Thornton', 'Martin Freeman', 'Wood Harrelson', 'Matthew McConaughey', 'Mark Ruffalo']
+TVSupportingActress = ['Joanna Froggatt', 'Uzo Aduba', 'Kathy Bates', 'Allison Janney', 'Michelle Monaghan']
+TVSupportingActor = ['Matt Bomer', 'Alan Cumming', 'Colin Hanks', 'Bill Murray', 'Jon Voight']
+
+allNominees = [MPDrama, MPMusicComedy, MPDirector, MPActressDrama, MPActorDrama, MPActorMusicComedy, MPActressMusicComedy, MPSupportingActress, MPSupportingActor, MPScreenplay, MPForeign,
+			   MPAnimated, MPSong, MPScore, TVMusicComedy, TVDrama, TVActressDrama, TVActorDrama, TVActressComedy, TVActorComedy, TVMiniseries, TVActressMiniseries,
+			   TVActorMiniSeries,TVSupportingActress, TVSupportingActor]
+awardsList = ['Best Motion Picture - Drama', 'Best Motion Picture - Musical or Comedy', 'Best Director - Motion Picture', 'Best Actress in a Motion Picture - Drama',
+			  'Best Actor in a Motion Picture - Drama', 'Best Actor in a Musical or Comedy - Motion Picture', 'Best Actress in a Musical or Comedy - Motion Picture',
+			  'Best Supporting Actress - Motion Picture', 'Best Supporting Actor - Motion Picture', 'Best Screenplay - Motion Picture', 'Foreign Film - Motion Picture', 
+			  'Best Animated Film - Motion Picture', 'Best Original Song - Motion Picture', 'Best Original Score - Motion Picture', 'Best TV Comedy or Musical', 'Best TV Drama',
+			  'Best Actress in a TV Drama', 'Best Actor in a TV Drama', 'Best Actress in a TV Comedy or Musical', 'Best Actor in a TV Comedy or Musical', 'Best Miniseries or TV Movie',
+			  'Best Actress in a Miniseries or TV Movie', 'Best Actor in a Miniseries or TV Movie', 'Best Supporting Actress in a TV Show, Miniseries or TV Movie', 
+			  'Best Supporting Actor in a TV Show, Miniseries or TV Movie']
