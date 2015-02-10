@@ -3,6 +3,7 @@ from goldenglobeWill import findWinner
 from goldenglobeWill import remove_punctuation
 from goldenglobeWill import findHost
 import json
+from collections import OrderedDict
 
 directory13 = {'Ben Affleck': 'Argo', 'Kathryn Bigelow' : "Zero Dark Thirty", 'Ang Lee': 'Life of Pi', 'Steven Speilberg': 'Lincoln',
 		  'Quentin Tarantino': 'Django Unchained', 'Jessica Chastain':'Zero Dark Thirty', 'Marion Cotillard': 'Rust and Bone',
@@ -132,14 +133,14 @@ awardsList15 = ['Best Motion Picture - Drama', 'Best Motion Picture - Musical or
 			  'Best Animated Feature Film', 'Best Original Song - Motion Picture', 'Best Original Score - Motion Picture', 'Best TV Comedy or Musical', 'Best TV Drama',
 			  'Best Actress in a TV Drama', 'Best Actor in a TV Drama', 'Best Actress in a TV Comedy or Musical', 'Best Actor in a TV Comedy or Musical', 'Best Miniseries or TV Movie',
 			  'Best Actress in a Miniseries or TV Movie', 'Best Actor in a Miniseries or TV Movie', 'Best Supporting Actress in a TV Show, Miniseries or TV Movie', 
-			  'Best Supporting Actor in a TV Show, Miniseries or TV Movie']
+			  'Best Supporting Actor in a TV Show, Miniseries or TV Movie','Cecil B. DeMille Award']
 searchList = ['Best Motion Picture - Drama', 'Best Motion Picture - Musical or Comedy', 'Best Director - Motion Picture', 'Best Actress in a Motion Picture - Drama',
 			  'Best Actor in a Motion Picture - Drama', 'Best Actor in a Motion Picture - Comedy or Musical', 'Best Actress in a Motion Picture - Comedy or Musical',
 			  'Best Supporting Actress - Motion Picture', 'Best Supporting Actor - Motion Picture', 'Best Screenplay - Motion Picture', 'Foreign Film', 
 			  'Animated Film', 'Best Original Song', 'Best Original Score', 'Best TV Comedy or Musical', 'Best TV Drama',
 			  'Best Actress in a TV Drama', 'Best Actor in a TV Drama', 'Best Actress in a TV Comedy or Musical', 'Best Actor in a TV Comedy', 'Best Miniseries or TV Movie',
 			  'Best Actress in a Miniseries or TV Movie', 'Best Actor in a Miniseries or TV Movie', 'Best Supporting Actress in a TV Show, Miniseries or TV Movie', 
-			  'Best Supporting Actor in a TV Show, Miniseries or TV Movie']
+			  'Best Supporting Actor in a TV Show, Miniseries or TV Movie','Cecil B. DeMille Award']
 
 
 def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, outputName):
@@ -163,7 +164,7 @@ def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, 
 	structured = {}
 	unstructured = {}
 
-	metadata['year'] = year
+	
 	hosts['method'] = "hardcoded"
 	hosts['method_description'] = ''
 	nominees['method'] = "hardcoded"
@@ -172,6 +173,13 @@ def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, 
 	awards['method_description'] = ''
 	presenters['method'] = "hardcoded"
 	presenters['method_description'] = ''
+	metadata['year'] = year
+	metadata['hosts'] = hosts
+	metadata['nominees'] = nominees
+	metadata['awards'] = awards
+	metadata['presenters'] = presenters
+
+
 	unstructured['hosts'] = ['Tina Fey', 'Amy Poehler']
 	unstructured['winners'] = winners
 	unstructured['awards'] = awardsList
@@ -190,11 +198,11 @@ def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, 
 	results['data'] = data
 
 	with open(outputName, 'w') as outfile:
-	    json.dump(data, outfile)
+	    json.dump(OrderedDict(results), outfile)
 
 
-#writeAnswersToJSON(2013, allNominees13,awardsList13, presenters13, 'gg2013.json','data13.json')
-writeAnswersToJSON(2015, allNominees15,awardsList15, presenters15, 'gg15mini.json','data15.json')
+writeAnswersToJSON(2013, allNominees13,awardsList13, presenters13, 'gg2013.json','data13.json')
+# writeAnswersToJSON(2015, allNominees15,awardsList15, presenters15, 'gg15mini.json','data15.json')
 	
 
 
