@@ -1,7 +1,6 @@
-from goldenglobeWill import findTopTweets
+from goldenglobeWill import searchTweets
 from goldenglobeWill import findWinner
 from goldenglobeWill import remove_punctuation
-from goldenglobeWill import findHost
 import json
 from collections import OrderedDict
 
@@ -59,18 +58,58 @@ TVSupportingActor13 = ['Max Greenfield', 'Ed Harris', 'Danny Huston', 'Mandy Pat
 allNominees13 = [MPDrama13, MPMusicComedy13, MPDirector13, MPActressDrama13, MPActorDrama13, MPActorMusicComedy13, MPActressMusicComedy13, MPSupportingActress13, MPSupportingActor13, MPScreenplay13, MPForeign13,
 			   MPAnimated13, MPSong13, MPScore13, TVMusicComedy13, TVDrama13, TVActressDrama13, TVActorDrama13, TVActressComedy13, TVActorComedy13, TVMiniseries13, TVActressMiniseries13,
 			   TVActorMiniSeries13, TVSupportingActress13, TVSupportingActor13]
-presenters13 = [['Julia Roberts'],['Dustin Hoffman'],['Halle Berry'],['George Clooney'],['George Clooney'], ['Jennifer Garner'],['Will Ferell','Kristen Wiig'],['Megan Fox','Jonah Hill'],
-			    ['Bradley Cooper','Kate Hudson'],['Robert Pattinson', 'Amanda Seyfried'],['Arnold Schwarzenegger','Sylvester Stallone'],['Sacha Baron Cohen'],['Jennifer Lopez','Jason Statham'],
-			    ['Jennifer Lopez','Jason Statham'],['Jimmy Fallon','Jay Leno'],['Salma Hayek','Paul Rudd'],['Nathan Fillion','Lea Michelle'],['Salma Hayek', 'Paul Rudd'],['Aziz Ansari', 'Jason Bateman'],
-			    ['Lucy Liu', 'Debra Messing'],['Don Cheadle','Eva Longoria'],['Don Cheadle','Eva Longoria'],['Jessica Alba', 'Kiefer Sutherland'],['Dennis Quaid', 'Kerry Washington'],
-			    ['Kristen Bell', 'John Krasinski']]
-awardsList13 = ['Best Motion Picture - Drama', 'Best Motion Picture - Musical or Comedy', 'Best Director - Motion Picture', 'Best Actress in a Motion Picture - Drama',
-			  'Best Actor in a Motion Picture - Drama', 'Best Actor in a Motion Picture - Musical or Comedy', 'Best Actress in a Motion Picture - Musical or Comedy',
-			  'Best Supporting Actress - Motion Picture', 'Best Supporting Actor - Motion Picture', 'Best Screenplay - Motion Picture', 'Foreign Film - Motion Picture', 
-			  'Best Animated Film - Motion Picture', 'Best Original Song - Motion Picture', 'Best Original Score - Motion Picture', 'Best TV Comedy or Musical', 'Best TV Drama',
-			  'Best Actress in a TV Drama', 'Best Actor in a TV Drama', 'Best Actress in a TV Comedy or Musical', 'Best Actor in a TV Comedy or Musical', 'Best Miniseries or TV Movie',
-			  'Best Actress in a Miniseries or TV Movie', 'Best Actor in a Miniseries or TV Movie', 'Best Supporting Actress in a TV Show, Miniseries or TV Movie', 
-			  'Best Supporting Actor in a TV Show, Miniseries or TV Movie']
+presenters13 = [['Julia Roberts'],
+				['Dustin Hoffman'],
+				['Halle Berry'],
+				['George Clooney'],
+				['George Clooney'],
+				['Jennifer Garner'],
+				['Will Ferell','Kristen Wiig'],
+				['Megan Fox','Jonah Hill'],
+			    ['Bradley Cooper','Kate Hudson'],
+			    ['Robert Pattinson', 'Amanda Seyfried'],
+			    ['Arnold Schwarzenegger','Sylvester Stallone'],
+			    ['Sacha Baron Cohen'],
+			    ['Jennifer Lopez','Jason Statham'],
+			    ['Jennifer Lopez','Jason Statham'],
+			    ['Jimmy Fallon','Jay Leno'],
+			    ['Salma Hayek','Paul Rudd'],
+			    ['Nathan Fillion','Lea Michelle'],
+			    ['Salma Hayek', 'Paul Rudd'],
+			    ['Aziz Ansari', 'Jason Bateman'],
+			    ['Lucy Liu', 'Debra Messing'],
+			    ['Don Cheadle','Eva Longoria'],
+			    ['Don Cheadle','Eva Longoria'],
+			    ['Jessica Alba', 'Kiefer Sutherland'],
+			    ['Dennis Quaid', 'Kerry Washington'],
+			    ['Kristen Bell', 'John Krasinski'],
+			    ['Robert Downey, Jr.']]
+awardsList13 = ['Best Motion Picture - Drama', 
+				'Best Motion Picture - Comedy or Musical', 
+				'Best Director - Motion Picture', 
+				'Best Performance by an Actress in a Motion Picture - Drama',
+			  	'Best Performance by an Actor in a Motion Picture - Drama', 
+			  	'Best Performance by an Actor in a Motion Picture - Comedy Or Musical', 
+			  	'Best Performance by an Actress in a Motion Picture - Comedy Or Musical',
+			  	'Best Performance by an Actress In A Supporting Role in a Motion Picture', 
+			  	'Best Performance by an Actor In A Supporting Role in a Motion Picture', 
+			  	'Best Screenplay - Motion Picture', 
+			  	'Best Foreign Language Film', 
+			  	'Best Animated Feature Film', 
+			  	'Best Original Song - Motion Picture', 
+			  	'Best Original Score - Motion Picture', 
+			  	'Best Television Series - Comedy Or Musical', 
+			  	'Best Television Series - Drama',
+			  	'Best Performance by an Actress In A Television Series - Drama', 
+			  	'Best Performance by an Actor In A Television Series - Drama', 
+			  	'Best Performance by an Actress In A Television Series - Comedy Or Musical', 
+			  	'Best Performance by an Actor In A Television Series - Comedy Or Musical',
+			  	'Best Mini-Series Or Motion Picture Made for Television',
+			  	'Best Performance by an Actress In A Mini-series or Motion Picture Made for Television', 
+			  	'Best Performance by an Actor In A Mini-series or Motion Picture Made for Television', 
+			  	'Best Performance by an Actress in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television', 
+			  	'Best Performance by an Actor in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television',
+			  	'Cecile B. DeMille']
 
 directory15 = {'Richard Linklater': 'Boyhood', 'Wes Anderson' : 'The Grand Budapest Hotel', 'Ava DuVernay' : 'Selma', 'David Fincher' : 'Gone Girl',
 'Alejandro Gonzalez Inarritu' : 'Birdman','Eddie Redmayne' : 'The Theory of Everything', 'Steve Carell' : 'Foxcatcher', 'Benedict Cumberbatch' : 'The Imitation Game', 
@@ -127,24 +166,61 @@ presenters15 = [['Meryl Streep'], ['Robert Downey, Jr.'], ['Harrison Ford'], ['M
 			  ['Sienna Miller', 'Vince Vaughn'], ['Bryan Cranston', 'Kerry Washington'], ['Adam Levine','Paul Rudd'], ['Anna Faris','Chris Pratt'], ['David Duchovny', 'Katherine Heigl'], 
 			  ['Bryan Cranston','Kerry Washington'], ['Jane Fonda','Lily Tomlin'],['Jennifer Lopez','Jeremy Renner'],['Kate Beckinsale','Adrien Brody'],['Jennifer Lopez','Jeremy Renner'], 
 			  ['Jamie Dornan','Dakota Johnson'],['Katie Holmes','Seth Meyers']]
-awardsList15 = ['Best Motion Picture - Drama', 'Best Motion Picture - Musical or Comedy', 'Best Director - Motion Picture', 'Best Actress in a Motion Picture - Drama',
-			  'Best Actor in a Motion Picture - Drama', 'Best Actor in a Motion Picture - Comedy or Musical', 'Best Actress in a Motion Picture - Comedy or Musical',
-			  'Best Supporting Actress - Motion Picture', 'Best Supporting Actor - Motion Picture', 'Best Screenplay - Motion Picture', 'Best Foreign Language Film', 
-			  'Best Animated Feature Film', 'Best Original Song - Motion Picture', 'Best Original Score - Motion Picture', 'Best TV Comedy or Musical', 'Best TV Drama',
-			  'Best Actress in a TV Drama', 'Best Actor in a TV Drama', 'Best Actress in a TV Comedy or Musical', 'Best Actor in a TV Comedy or Musical', 'Best Miniseries or TV Movie',
-			  'Best Actress in a Miniseries or TV Movie', 'Best Actor in a Miniseries or TV Movie', 'Best Supporting Actress in a TV Show, Miniseries or TV Movie', 
-			  'Best Supporting Actor in a TV Show, Miniseries or TV Movie','Cecil B. DeMille Award']
-searchList = ['Best Motion Picture - Drama', 'Best Motion Picture - Musical or Comedy', 'Best Director - Motion Picture', 'Best Actress in a Motion Picture - Drama',
-			  'Best Actor in a Motion Picture - Drama', 'Best Actor in a Motion Picture - Comedy or Musical', 'Best Actress in a Motion Picture - Comedy or Musical',
-			  'Best Supporting Actress - Motion Picture', 'Best Supporting Actor - Motion Picture', 'Best Screenplay - Motion Picture', 'Foreign Film', 
-			  'Animated Film', 'Best Original Song', 'Best Original Score', 'Best TV Comedy or Musical', 'Best TV Drama',
-			  'Best Actress in a TV Drama', 'Best Actor in a TV Drama', 'Best Actress in a TV Comedy or Musical', 'Best Actor in a TV Comedy', 'Best Miniseries or TV Movie',
-			  'Best Actress in a Miniseries or TV Movie', 'Best Actor in a Miniseries or TV Movie', 'Best Supporting Actress in a TV Show, Miniseries or TV Movie', 
-			  'Best Supporting Actor in a TV Show, Miniseries or TV Movie','Cecil B. DeMille Award']
-
+awardsList15 = ['Best Motion Picture - Drama', 
+				'Best Motion Picture - Comedy or Musical', 
+				'Best Director - Motion Picture', 
+				'Best Performance by an Actress in a Motion Picture - Drama',
+			  	'Best Performance by an Actor in a Motion Picture - Drama', 
+			  	'Best Performance by an Actor in a Motion Picture - Comedy Or Musical', 
+			  	'Best Performance by an Actress in a Motion Picture - Comedy Or Musical',
+			  	'Best Performance by an Actress In A Supporting Role in a Motion Picture', 
+			  	'Best Performance by an Actor In A Supporting Role in a Motion Picture', 
+			  	'Best Screenplay - Motion Picture', 
+			  	'Best Foreign Language Film', 
+			  	'Best Animated Feature Film', 
+			  	'Best Original Song - Motion Picture', 
+			  	'Best Original Score - Motion Picture', 
+			  	'Best Television Series - Comedy Or Musical', 
+			  	'Best Television Series - Drama',
+			  	'Best Performance by an Actress In A Television Series - Drama', 
+			  	'Best Performance by an Actor In A Television Series - Drama', 
+			  	'Best Performance by an Actress In A Television Series - Comedy Or Musical', 
+			  	'Best Performance by an Actor In A Television Series - Comedy Or Musical',
+			  	'Best Mini-Series Or Motion Picture Made for Television',
+			  	'Best Performance by an Actress In A Mini-series or Motion Picture Made for Television', 
+			  	'Best Performance by an Actor In A Mini-series or Motion Picture Made for Television', 
+			  	'Best Performance by an Actress in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television', 
+			  	'Best Performance by an Actor in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television',
+			  	'Cecil B. DeMille Award']
+searchList = ['Best Motion Picture - Drama', 
+			  'Best Motion Picture - Musical or Comedy', 
+			  'Best Director - Motion Picture', 
+			  'Best Actress in a Motion Picture - Drama',
+			  'Best Actor in a Motion Picture - Drama', 
+			  'Best Actor in a Motion Picture - Comedy or Musical', 
+			  'Best Actress in a Motion Picture - Comedy or Musical',
+			  'Best Supporting Actress - Motion Picture', 
+			  'Best Supporting Actor - Motion Picture', 
+			  'Best Screenplay - Motion Picture', 'Foreign Film', 
+			  'Animated Film', 'Best Original Song',
+			  'Best Original Score', 'Best TV Comedy or Musical', 
+			  'Best TV Drama',
+			  'Best Actress in a TV Drama', 
+			  'Best Actor in a TV Drama', 
+			  'Best Actress in a TV Comedy or Musical', 
+			  'Best Actor in a TV Comedy',
+			  'Best Miniseries or TV Movie',
+			  'Best Actress in a Miniseries or TV Movie', 
+			  'Best Actor in a Miniseries or TV Movie', 
+			  'Best Supporting Actress in a TV Show, Miniseries or TV Movie', 
+			  'Best Supporting Actor in a TV Show, Miniseries or TV Movie',
+			  'Cecile B. DeMille Award']
 
 def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, outputName):
-	winners= findTopTweets(searchList, allNominees, inputFile)
+	winners= searchTweets(searchList, allNominees, inputFile)
+
+	print awardsList
+	print winners
 
 	for i in range(0,len(winners)):
 		print awardsList[i] + " goes to " + winners[i]
@@ -164,7 +240,6 @@ def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, 
 	structured = {}
 	unstructured = {}
 
-	
 	hosts['method'] = "hardcoded"
 	hosts['method_description'] = ''
 	nominees['method'] = "hardcoded"
@@ -179,19 +254,40 @@ def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, 
 	metadata['awards'] = awards
 	metadata['presenters'] = presenters
 
-
 	unstructured['hosts'] = ['Tina Fey', 'Amy Poehler']
+	#add the winner for cecile
+	winners.append('jodie foster')
+	#presenterList.append(['robert downey, jr.'])
+	#awardsList.append("Cecil B. DeMille Award")
+
 	unstructured['winners'] = winners
 	unstructured['awards'] = awardsList
-	unstructured['presenters'] = []
+	#get a list of presenters
+	presenterUnstructured = []
+	for presenter in presenterList:
+		presenterUnstructured = presenterUnstructured + presenter
+
+	unstructured['presenters'] = presenterUnstructured
 	unstructured['nominees'] = nomineeList
 
-	for i in range(0, len(awardsList)):
+	for i in range(0, len(winners)):
 		award = {}
-		award['nominees'] = allNominees[i]
+		if i==25:#the Cecile B DeMille award does not have nominees
+			award['nominees']=[]
+		else:
+			award['nominees'] = allNominees[i]
 		award['winner'] = winners[i]
 		award['presenters'] = presenterList[i]
-		structured['award' + str(i+1)] = award
+		structured[awardsList[i]] = award
+
+	#add the cecil b demille winner
+	# award = {}
+	# award['nominees']=[]
+	# print presenterList[25]
+	# award['presenters']=presenterList[25]
+	# award['winner'] = winners[25]
+	# structured[awardsList[25]] = award
+
 	data['unstructured']= unstructured
 	data['structured'] = structured
 	results['metadata'] = metadata
@@ -202,7 +298,7 @@ def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, 
 
 
 writeAnswersToJSON(2013, allNominees13,awardsList13, presenters13, 'gg2013.json','data13.json')
-# writeAnswersToJSON(2015, allNominees15,awardsList15, presenters15, 'gg15mini.json','data15.json')
+#writeAnswersToJSON(2015, allNominees15,awardsList15, presenters15, 'gg15mini.json','data15.json')
 	
 
 

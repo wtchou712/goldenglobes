@@ -29,13 +29,15 @@ def removeIgnored(phrase):
 	stopset.add('actress')
 	stopset.add('co')
 	stopset.add('http')
+	stopset.add('cecile')
+	stopset.add('demille')
 	#added stopsets
 	stopset.add('award')
 	for i in range(0,len(words)):
 		stopset.add(words[i])
 	return stopset
 
-def findTopTweets(awards,nominees,inputFile):
+def searchTweets(awards,nominees,inputFile):
 	start_time = time.time()
 	print "Searching for top tweets..."
 	data = []
@@ -48,8 +50,8 @@ def findTopTweets(awards,nominees,inputFile):
 		award_stopsets.append(stopset)
 
 	# this code block creates our corpus of relevant tweets - an array of tweet objects
-	award_bigrams = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
-	award_unigrams =[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+	award_bigrams = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+	award_unigrams =[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 
 	counter = 0
 	for tweet in data[0]: 
@@ -61,7 +63,7 @@ def findTopTweets(awards,nominees,inputFile):
 		# 	if tweetText.find(token)==-1:#check if the award token is found
 		# 		#if not found, change to true
 		# 		awardTokenNotFound = True
-		print "Determining if tweet matches an award..."
+		#print "Determining if tweet matches an award..."
 
 		for i in range(0, len(awards)):
 			awardTokenNotFound = False
@@ -100,7 +102,7 @@ def findTopTweets(awards,nominees,inputFile):
 	print "Finished searching tweets, now determining winners..."
 
 	winners =[]
-	for i in range(0,len(awards)):
+	for i in range(0,len(awards)-1):
 		fdistUnigram = FreqDist(award_unigrams[i])
 		topUni = fdistUnigram.most_common(10)
 		fdistBigram = nltk.FreqDist(award_bigrams[i])
@@ -110,19 +112,25 @@ def findTopTweets(awards,nominees,inputFile):
 		winner = findWinner(topUni,topBi, nominees[i])
 		winners.append(winner)
 		#print "winner for " + awards[i] + ": " + winner
-	# fdistPresenter = nltk.FreqDist(presenter_bigram)
-	# topPresenterBi = fdistPresenter.most_common(10)
 
-	# print topPresenterBi
-	# return topUni,topBi
+	#find the cecile winner on own
+	fdistBigram = nltk.FreqDist(award_bigrams[25])
+	topBi = fdistBigram.most_common(10)
+	print "top bigrams for Cecile B. DeMille award"
+	print topBi
+	biPart1 = (topBi[0][0])[0]
+	biPart2 = (topBi[0][0])[1]
+	winner = biPart1 + " " + biPart2
+	winners.append(winner)
+
 	elapsed_time = time.time() - start_time
 	print "Search length: " + str(elapsed_time)
 	#print winners
 	return winners
 
 def findWinner(topUnigrams, topBigrams, nominees):
-	print topUnigrams
-	print topBigrams
+	# print topUnigrams
+	# print topBigrams
 	singleWordNom = False
 	for nom in nominees: #search nominees to see if any are single words
 		checkNom = nltk.word_tokenize(nom)
@@ -163,11 +171,16 @@ def findWinner(topUnigrams, topBigrams, nominees):
 					break
 				
 
-def findHost(topBigrams):
+def findCecileWinner(topUnigrams, topBigrams):
+	print topUnigrams
+	print topBigrams
 	for i in range(0,len(topBigrams)):
 		biPart1 = (topBigrams[i][0])[0]
 		biPart2 = (topBigrams[i][0])[1]
-		return biPart1 + " " + biPart2
+		if nominee.find(biPart1)!= -1 or nominee.find(biPart2)!=-1:
+			return nominees[j]
+			break
+				
 
 
 
