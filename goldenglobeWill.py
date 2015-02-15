@@ -17,7 +17,7 @@ def remove_punctuation(string):
 	return string
 
 def removeIgnored(phrase):
-	words = phrase.split(' ')
+	words = phrase.lower().split(' ')
 	stopset = set(stopwords.words('english'))
 	stopset.add('best')
 	stopset.add('golden')
@@ -29,7 +29,7 @@ def removeIgnored(phrase):
 	stopset.add('actress')
 	stopset.add('co')
 	stopset.add('http')
-	stopset.add('cecile')
+	stopset.add('cecil')
 	stopset.add('demille')
 	#added stopsets
 	stopset.add('award')
@@ -50,8 +50,10 @@ def searchTweets(awards,nominees,inputFile):
 		award_stopsets.append(stopset)
 
 	# this code block creates our corpus of relevant tweets - an array of tweet objects
-	award_bigrams = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
-	award_unigrams =[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+	award_bigrams = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],
+					 [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+	award_unigrams =[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],
+					 [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 
 	counter = 0
 	for tweet in data[0]: 
@@ -68,34 +70,24 @@ def searchTweets(awards,nominees,inputFile):
 		for i in range(0, len(awards)):
 			awardTokenNotFound = False
 			award = remove_punctuation(awards[i].lower())
-			#print award
-			#print "Determining match with award" + str(i+1)
 
 			if award not in tweetText:
 				awardTokenNotFound = True
-
 			if awardTokenNotFound is False:
 				print "Possible matching tweet found"
 				tweetTokens = nltk.word_tokenize(tweetText)
-
 				words = re.findall('\w+', tweetText) #seperate the words
 				bigrams = zip(words, words[1:]) #create the bigrams
 
 				#add to array of unigrams
-				# tweetTokens = nltk.word_tokenize(tweetText)
 				for tok in tweetTokens:#add appropriate unigrams
 					if tok not in award_stopsets[i]:
 						award_unigrams[i].append(tok)
 
 				#add to array of bigams
-				# words = re.findall('\w+', tweetText) #seperate the words
-				# bigrams = zip(words, words[1:]) #create the bigrams
 				for bi in bigrams:
 					if bi[0] not in award_stopsets[i] and bi[1] not in award_stopsets[i]:
 						award_bigrams[i].append(bi)
-
-			#print "Finished with current tweet..."		
-
 		counter+=1
 		print "Tweets scanned: " + str(counter)
 
@@ -105,9 +97,19 @@ def searchTweets(awards,nominees,inputFile):
 	for i in range(0,len(awards)):
 		if i is 25:
 			#find the cecile winner on own
-			fdistBigram = nltk.FreqDist(award_bigrams[25])
+			fdistBigram = nltk.FreqDist(award_bigrams[i])
 			topBi = fdistBigram.most_common(10)
-			print "top bigrams for Cecile B. DeMille award"
+			# print "top bigrams for Cecil B. DeMille award"
+			# print topBi
+			biPart1 = (topBi[0][0])[0]
+			biPart2 = (topBi[0][0])[1]
+			winner = biPart1 + " " + biPart2
+			winners.append(winner)
+		elif i >= 26: 
+			#find the winners for the fun goals
+			fdistBigram = nltk.FreqDist(award_bigrams[i])
+			topBi = fdistBigram.most_common(10)
+			print "top bigrams for " + awards[i]
 			print topBi
 			biPart1 = (topBi[0][0])[0]
 			biPart2 = (topBi[0][0])[1]
@@ -187,16 +189,6 @@ def findWinner(topUnigrams, topBigrams, nominees):
 					break
 				
 
-def findCecileWinner(topUnigrams, topBigrams):
-	print topUnigrams
-	print topBigrams
-	for i in range(0,len(topBigrams)):
-		biPart1 = (topBigrams[i][0])[0]
-		biPart2 = (topBigrams[i][0])[1]
-		if nominee.find(biPart1)!= -1 or nominee.find(biPart2)!=-1:
-			return nominees[j]
-			break
-				
 
 
 

@@ -111,7 +111,7 @@ awardsList13 = ['Best Motion Picture - Drama',
 			  	'Best Performance by an Actor In A Mini-series or Motion Picture Made for Television', 
 			  	'Best Performance by an Actress in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television', 
 			  	'Best Performance by an Actor in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television',
-			  	'Cecile B. DeMille']
+			  	'Cecil B. DeMille Award']
 
 directory15 = {'Richard Linklater': 'Boyhood', 'Wes Anderson' : 'The Grand Budapest Hotel', 'Ava DuVernay' : 'Selma', 'David Fincher' : 'Gone Girl',
 'Alejandro Gonzalez Inarritu' : 'Birdman','Eddie Redmayne' : 'The Theory of Everything', 'Steve Carell' : 'Foxcatcher', 'Benedict Cumberbatch' : 'The Imitation Game', 
@@ -219,7 +219,14 @@ searchList = ['Best Motion Picture - Drama',
 			  'Best Actor in a Miniseries or TV Movie', 
 			  'Best Supporting Actress in a TV Show, Miniseries or TV Movie', 
 			  'Best Supporting Actor in a TV Show, Miniseries or TV Movie',
-			  'Cecile B. DeMille Award']
+			  'Cecil B. DeMille Award',
+			  'Best Dressed',
+			  'Worst Dressed',
+			  'controversial',
+			  'discussed',
+			  'bad taste',
+			  'ugly dress',
+			  'ugly suit']
 
 def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, outputName):
 	results= searchTweets(searchList, allNominees, inputFile)

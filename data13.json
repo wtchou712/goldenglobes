@@ -130,7 +130,7 @@
         "Best Performance by an Actor In A Mini-series or Motion Picture Made for Television",
         "Best Performance by an Actress in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television",
         "Best Performance by an Actor in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television",
-        "Cecile B. DeMille"
+        "Cecil B. DeMille Award"
       ],
       "winners": [
         "Argo",
@@ -366,6 +366,13 @@
         ],
         "winner": "Les Miserables"
       },
+      "Cecil B. DeMille Award": {
+        "nominees": [],
+        "presenters": [
+          "Robert Downey, Jr."
+        ],
+        "winner": "jodie foster"
+      },
       "Best Performance by an Actor In A Mini-series or Motion Picture Made for Television": {
         "nominees": [
           "Benedict Cumberbatch",
@@ -402,13 +409,6 @@
           "Julia Roberts"
         ],
         "winner": "Argo"
-      },
-      "Cecile B. DeMille": {
-        "nominees": [],
-        "presenters": [
-          "Robert Downey, Jr."
-        ],
-        "winner": "jodie foster"
       },
       "Best Performance by an Actor in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television": {
         "nominees": [

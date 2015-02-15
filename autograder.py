@@ -64,7 +64,7 @@ def calc_awards(result,answer):
         elif 'song' in rlist:
             translation[r] = 'best original song - motion picture'
         elif rlist.intersection(('cecil','demille')):
-            translation[r] = 'cecil b. demille'
+            translation[r] = 'cecil b. demille award'
         else:
             if rlist.intersection(('comedy','musical')):
                 qualifier = 'comedy or musical'
@@ -286,6 +286,9 @@ def main(filename):
             translation.update(trans)
             scores['unstructured'][item] = weight*score
             unstructuredstring += "\n%.2f x %3.2f\t%s\n"%(score,weight,item)
+        elif item == 'awards':
+            trans, temp = calc_awards(set(results['data']['unstructured'][item]),set(answers['unstructured'][item]))
+            translation.update(trans)
         total += weight
     pprint(translation)
     print "CALCULATING UNSTRUCTURED SCORES"
