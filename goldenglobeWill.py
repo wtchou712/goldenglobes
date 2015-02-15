@@ -102,31 +102,43 @@ def searchTweets(awards,nominees,inputFile):
 	print "Finished searching tweets, now determining winners..."
 
 	winners =[]
-	for i in range(0,len(awards)-1):
-		fdistUnigram = FreqDist(award_unigrams[i])
-		topUni = fdistUnigram.most_common(10)
-		fdistBigram = nltk.FreqDist(award_bigrams[i])
-		topBi = fdistBigram.most_common(10)
-		# print topUni
-		# print topBi
-		winner = findWinner(topUni,topBi, nominees[i])
-		winners.append(winner)
-		#print "winner for " + awards[i] + ": " + winner
+	for i in range(0,len(awards)):
+		if i is 25:
+			#find the cecile winner on own
+			fdistBigram = nltk.FreqDist(award_bigrams[25])
+			topBi = fdistBigram.most_common(10)
+			print "top bigrams for Cecile B. DeMille award"
+			print topBi
+			biPart1 = (topBi[0][0])[0]
+			biPart2 = (topBi[0][0])[1]
+			winner = biPart1 + " " + biPart2
+			winners.append(winner)
+		else:
+			fdistUnigram = FreqDist(award_unigrams[i])
+			topUni = fdistUnigram.most_common(10)
+			fdistBigram = nltk.FreqDist(award_bigrams[i])
+			topBi = fdistBigram.most_common(10)
+			# print topUni
+			# print topBi
+			results = findWinner(topUni,topBi, nominees[i])
+			winner = results[0]
+			nominees[i]=results[1]
+			winners.append(winner)
 
-	#find the cecile winner on own
-	fdistBigram = nltk.FreqDist(award_bigrams[25])
-	topBi = fdistBigram.most_common(10)
-	print "top bigrams for Cecile B. DeMille award"
-	print topBi
-	biPart1 = (topBi[0][0])[0]
-	biPart2 = (topBi[0][0])[1]
-	winner = biPart1 + " " + biPart2
-	winners.append(winner)
+	# #find the cecile winner on own
+	# fdistBigram = nltk.FreqDist(award_bigrams[25])
+	# topBi = fdistBigram.most_common(10)
+	# print "top bigrams for Cecile B. DeMille award"
+	# print topBi
+	# biPart1 = (topBi[0][0])[0]
+	# biPart2 = (topBi[0][0])[1]
+	# winner = biPart1 + " " + biPart2
+	# winners.append(winner)
 
 	elapsed_time = time.time() - start_time
 	print "Search length: " + str(elapsed_time)
 	#print winners
-	return winners
+	return winners,nominees
 
 def findWinner(topUnigrams, topBigrams, nominees):
 	# print topUnigrams
@@ -158,7 +170,9 @@ def findWinner(topUnigrams, topBigrams, nominees):
 				uni = topUnigrams[i][0]
 				nominee = nominees[j].lower()
 				if nominee.find(uni)!=-1:
-					return nominees[j]
+					winner = nominees[j]
+					nominees.remove(winner)
+					return winner,nominees
 					break
 	else:
 		for i in range(0,len(topBigrams)):
@@ -167,7 +181,9 @@ def findWinner(topUnigrams, topBigrams, nominees):
 				biPart2 = (topBigrams[i][0])[1]
 				nominee = nominees[j].lower()
 				if nominee.find(biPart1)!= -1 or nominee.find(biPart2)!=-1:
-					return nominees[j]
+					winner = nominees[j]
+					nominees.remove(winner)
+					return winner,nominees
 					break
 				
 

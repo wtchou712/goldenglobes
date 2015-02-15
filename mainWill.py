@@ -31,20 +31,22 @@ directory13 = {'Ben Affleck': 'Argo', 'Kathryn Bigelow' : "Zero Dark Thirty", 'A
 MPDrama13 = ["Lincoln", "Django Unchained", "Life of Pi", "Argo", "Zero Dark Thirty"]
 MPMusicComedy13 = ["The Best Exotic Marigold Hotel", "Les Miserables", "Moonrise Kingdom", "Salmon Fishing in the Yemen", "Silver Linings Playbook"]
 MPDirector13 = ["Ben Affleck", "Kathryn Bigelow", "Ang Lee", "Steven Steilberg", "Quentin Tarantino"]
-MPActressDrama13 = ["Jessica Chastain", "Marion Cotillard", 'Helen Mirren', 'Naomi Watts', 'Rachel Weisz']
+MPActressDrama13 = ["Jessica Chastain", "Marion Cotillard",'Sally Field', 'Helen Mirren', 'Naomi Watts', 'Rachel Weisz']
 MPActorDrama13 = ['Daniel Day-Lewis', 'Richard Gere', 'John Hawkes', 'Joaquin Phoenix', 'Denzel Washington']
 MPActorMusicComedy13 = ['Jack Black', 'Bradley Cooper', 'Hugh Jackman', 'Ewan McGregor', 'Bill Murray']
 MPActressMusicComedy13 = ['Emily Blunt', 'Judi Dench', 'Jennifer Lawrence', 'Maggie Smith', 'Meryl Streep']
 MPSupportingActress13 = ['Amy Adams', 'Sally Field', 'Anne Hathaway', 'Helen Hunt', 'Nicole Kidman']
 MPSupportingActor13 = ['Alan Arkin', 'Leonardo DiCaprio', 'Philip Seymour Hoffman', 'Tommy Lee Jones', 'Christoph Waltz']
-MPScreenplay13 = ['Mark Boal', 'Tony Kushner', "David O'Russell", 'Quentin Tarantino', 'Chris Terrio']
-MPForeign13 = ['Amour','A Royal Affair', 'The Intouchables', 'Kon-Tiki', 'Rust and Bone']
+MPScreenplay13 = ['Django Unchained','Zero Dark Thirty','Lincoln','Silver Linings Playbook','Argo']
+#['Mark Boal', 'Tony Kushner', "David O'Russell", 'Quentin Tarantino', 'Chris Terrio']
+MPForeign13 = ['Amour','A Royal Affair', 'The Intouchables', 'Kon Tiki', 'Rust and Bone']
 MPAnimated13 = ['Rise of the Guardians', 'Brave', 'Frankenweenie', 'Hotel Transylvania', 'Wreck-It Ralph']
-MPSong13 = ['For You', 'Not Running Anymore', 'Safe & Sound', 'Skyfall', 'Suddenly']
-MPScore13 = ['Mychael Danna', 'Alexandre Desplat', 'Dario Marianelli', 'Tom Tykwer, Johnny Klimek, Reinhold Heil', 'John Williams']
+MPSong13 = ['Act of Valor', 'Stand Up Guys', 'The Hunger Games', 'Skyfall', 'Les Miserables']
+MPScore13 = ['Life of Pi','Argo','Anna Karenina', 'Cloud Atlas','Lincoln']
+
 
 TVMusicComedy13 = ['The Big Bang Theory', 'Episodes' , 'Girls', 'Modern Family', 'Smash']
-TVDrama13 = ['Breaking Bad', 'Boardwalk Empire', 'Downtown Abbey', 'Homeland', 'The Newsroom']
+TVDrama13 = ['Breaking Bad', 'Boardwalk Empire', 'Downtown Abbey (masterpiece)', 'Homeland', 'The Newsroom']
 TVActressDrama13 = ['Connie Britton', 'Glenn Close', 'Claire Danes', 'Michelle Dockery', 'Julianna Margulies']
 TVActorDrama13 = ['Steve Buscemi', 'Bryan Cranston', 'Jeff Daniels', 'Jon Hamm', 'Damian Lewis']
 TVActressComedy13 = ['Zooey Deschanel', 'Julia Louis-Dreyfous', 'Lena Dunham', 'Tina Fey', 'Amy Poehler']
@@ -201,9 +203,12 @@ searchList = ['Best Motion Picture - Drama',
 			  'Best Actress in a Motion Picture - Comedy or Musical',
 			  'Best Supporting Actress - Motion Picture', 
 			  'Best Supporting Actor - Motion Picture', 
-			  'Best Screenplay - Motion Picture', 'Foreign Film', 
-			  'Animated Film', 'Best Original Song',
-			  'Best Original Score', 'Best TV Comedy or Musical', 
+			  'Best Screenplay - Motion Picture', 
+			  'Foreign Film', 
+			  'Animated Film', 
+			  'Best Original Song',
+			  'Best Original Score', 
+			  'Best TV Comedy or Musical', 
 			  'Best TV Drama',
 			  'Best Actress in a TV Drama', 
 			  'Best Actor in a TV Drama', 
@@ -217,10 +222,12 @@ searchList = ['Best Motion Picture - Drama',
 			  'Cecile B. DeMille Award']
 
 def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, outputName):
-	winners= searchTweets(searchList, allNominees, inputFile)
+	results= searchTweets(searchList, allNominees, inputFile)
+	winners = results[0]
+	allNominees = results[1]
 
-	print awardsList
-	print winners
+	# print awardsList
+	# print winners
 
 	for i in range(0,len(winners)):
 		print awardsList[i] + " goes to " + winners[i]
@@ -256,7 +263,7 @@ def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, 
 
 	unstructured['hosts'] = ['Tina Fey', 'Amy Poehler']
 	#add the winner for cecile
-	winners.append('jodie foster')
+	#winners.append('jodie foster')
 	#presenterList.append(['robert downey, jr.'])
 	#awardsList.append("Cecil B. DeMille Award")
 
@@ -270,9 +277,10 @@ def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, 
 	unstructured['presenters'] = presenterUnstructured
 	unstructured['nominees'] = nomineeList
 
+
 	for i in range(0, len(winners)):
 		award = {}
-		if i==25:#the Cecile B DeMille award does not have nominees
+		if i is 25:#the Cecile B DeMille award does not have nominees
 			award['nominees']=[]
 		else:
 			award['nominees'] = allNominees[i]
