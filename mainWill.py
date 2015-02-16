@@ -222,11 +222,20 @@ searchList = ['Best Motion Picture - Drama',
 			  'Cecil B. DeMille Award',
 			  'Best Dressed',
 			  'Worst Dressed',
-			  'controversial',
-			  'discussed',
-			  'bad taste',
-			  'ugly dress',
-			  'ugly suit']
+			  'best party',
+			  'worst speech',
+			  'great speech',
+			  'jaw drop',
+			  'opening monologue',
+			  'best look']
+
+			  #bad taste
+			  #best jewelry
+			  #great makeup
+			  #controversial
+			  #discussed
+			  #
+
 
 def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, outputName):
 	results= searchTweets(searchList, allNominees, inputFile)
@@ -234,82 +243,82 @@ def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, 
 	allNominees = results[1]
 
 	# print awardsList
-	# print winners
+	print winners
 
-	for i in range(0,len(winners)):
-		print awardsList[i] + " goes to " + winners[i]
+	# for i in range(0,len(awardsList)):
+	# 	print awardsList[i] + " goes to " + winners[i]
 
-	nomineeList = []
-	for nominees in allNominees:
-		nomineeList = nominees + nomineeList
-
-
-	results = {}
-	metadata = {}
-	hosts = {}
-	nominees = {}
-	awards = {}
-	presenters = {}
-	data = {}
-	structured = {}
-	unstructured = {}
-
-	hosts['method'] = "hardcoded"
-	hosts['method_description'] = ''
-	nominees['method'] = "hardcoded"
-	nominees['method_description'] = ''
-	awards['method'] = "hardcoded"
-	awards['method_description'] = ''
-	presenters['method'] = "hardcoded"
-	presenters['method_description'] = ''
-	metadata['year'] = year
-	metadata['hosts'] = hosts
-	metadata['nominees'] = nominees
-	metadata['awards'] = awards
-	metadata['presenters'] = presenters
-
-	unstructured['hosts'] = ['Tina Fey', 'Amy Poehler']
-	#add the winner for cecile
-	#winners.append('jodie foster')
-	#presenterList.append(['robert downey, jr.'])
-	#awardsList.append("Cecil B. DeMille Award")
-
-	unstructured['winners'] = winners
-	unstructured['awards'] = awardsList
-	#get a list of presenters
-	presenterUnstructured = []
-	for presenter in presenterList:
-		presenterUnstructured = presenterUnstructured + presenter
-
-	unstructured['presenters'] = presenterUnstructured
-	unstructured['nominees'] = nomineeList
+	# nomineeList = []
+	# for nominees in allNominees:
+	# 	nomineeList = nominees + nomineeList
 
 
-	for i in range(0, len(winners)):
-		award = {}
-		if i is 25:#the Cecile B DeMille award does not have nominees
-			award['nominees']=[]
-		else:
-			award['nominees'] = allNominees[i]
-		award['winner'] = winners[i]
-		award['presenters'] = presenterList[i]
-		structured[awardsList[i]] = award
+	# results = {}
+	# metadata = {}
+	# hosts = {}
+	# nominees = {}
+	# awards = {}
+	# presenters = {}
+	# data = {}
+	# structured = {}
+	# unstructured = {}
 
-	#add the cecil b demille winner
-	# award = {}
-	# award['nominees']=[]
-	# print presenterList[25]
-	# award['presenters']=presenterList[25]
-	# award['winner'] = winners[25]
-	# structured[awardsList[25]] = award
+	# hosts['method'] = "hardcoded"
+	# hosts['method_description'] = ''
+	# nominees['method'] = "hardcoded"
+	# nominees['method_description'] = ''
+	# awards['method'] = "hardcoded"
+	# awards['method_description'] = ''
+	# presenters['method'] = "hardcoded"
+	# presenters['method_description'] = ''
+	# metadata['year'] = year
+	# metadata['hosts'] = hosts
+	# metadata['nominees'] = nominees
+	# metadata['awards'] = awards
+	# metadata['presenters'] = presenters
 
-	data['unstructured']= unstructured
-	data['structured'] = structured
-	results['metadata'] = metadata
-	results['data'] = data
+	# unstructured['hosts'] = ['Tina Fey', 'Amy Poehler']
+	# #add the winner for cecile
+	# #winners.append('jodie foster')
+	# #presenterList.append(['robert downey, jr.'])
+	# #awardsList.append("Cecil B. DeMille Award")
 
-	with open(outputName, 'w') as outfile:
-	    json.dump(OrderedDict(results), outfile)
+	# unstructured['winners'] = winners
+	# unstructured['awards'] = awardsList
+	# #get a list of presenters
+	# presenterUnstructured = []
+	# for presenter in presenterList:
+	# 	presenterUnstructured = presenterUnstructured + presenter
+
+	# unstructured['presenters'] = presenterUnstructured
+	# unstructured['nominees'] = nomineeList
+
+
+	# for i in range(0, len(winners)):
+	# 	award = {}
+	# 	if i is 25:#the Cecile B DeMille award does not have nominees
+	# 		award['nominees']=[]
+	# 	else:
+	# 		award['nominees'] = allNominees[i]
+	# 	award['winner'] = winners[i]
+	# 	award['presenters'] = presenterList[i]
+	# 	structured[awardsList[i]] = award
+
+	# #add the cecil b demille winner
+	# # award = {}
+	# # award['nominees']=[]
+	# # print presenterList[25]
+	# # award['presenters']=presenterList[25]
+	# # award['winner'] = winners[25]
+	# # structured[awardsList[25]] = award
+
+	# data['unstructured']= unstructured
+	# data['structured'] = structured
+	# results['metadata'] = metadata
+	# results['data'] = data
+
+	# with open(outputName, 'w') as outfile:
+	#     json.dump(OrderedDict(results), outfile)
 
 
 writeAnswersToJSON(2013, allNominees13,awardsList13, presenters13, 'gg2013.json','data13.json')
