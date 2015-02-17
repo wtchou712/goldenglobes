@@ -12,19 +12,9 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.collocations import *
 from collections import Counter
 
-
-
 def remove_punctuation(string):
 	string=regex.sub(' ', string)
 	return string
-
-def findtags(tag_prefix, tagged_text):
-    """
-    Find tokens matching the specified tag_prefix
-    """
-    cfd = nltk.ConditionalFreqDist((tag, word) for (word, tag) in tagged_text
-                                  if tag.startswith(tag_prefix))
-    return dict((tag, cfd[tag].keys()[:5]) for tag in cfd.conditions())
 
 def remove_duplicates(values):
     output = []
@@ -37,69 +27,30 @@ def remove_duplicates(values):
             seen.add(value)
     return output
 
+ignoredWords = ['best', 'golden', 'globes', 'goldenglobes', 'goldenglobe', 'rt', 'actor', 'actress', 'co' , 'http', 'cecil', 'demille', 'perezhilton', 'wins',
+				'wtf', 'oscar', 'congratulations', 'director', 'category', 'right', '@', 'nbc', 'gives', 'academy', 'award', 'amp', 'eonline', 'list', 'photos',
+				'face', 'normal','wow','see','fashion','red','carpet','tonight','styles','stylist','yay', 'got','categories','biggest','guy','damn','funny','biggest',
+				'bad','globe','luck','win','stylists','comedy','party','batman','billybob','ge','common','etglobes','need']
+
+#set the stopset based on the list of ignored words
 def removeIgnored(phrase):
 	words = phrase.lower().split(' ')
 	stopset = set(stopwords.words('english'))
-	stopset.add('best')
-	stopset.add('golden')
-	stopset.add('globes')
-	stopset.add('goldenglobes')
-	stopset.add('goldenglobe')
-	stopset.add('rt')
-	stopset.add('actor')
-	stopset.add('actress')
-	stopset.add('co')
-	stopset.add('http')
-	stopset.add('cecil')
-	stopset.add('demille')
-	stopset.add('perezhilton')
-	stopset.add('wins')
-	stopset.add('wtf')
-	stopset.add('oscar')
-	stopset.add('congratulations')
-	stopset.add('director')
-	stopset.add('category')
-	stopset.add('right')
-	stopset.add('@')
-	stopset.add('nbc')
-	stopset.add('gives')
-	stopset.add('academy')
-	stopset.add('award')
-	stopset.add('amp')
-	stopset.add('eonline')
-	stopset.add('list')
-	stopset.add('photos')
-	stopset.add('face')
-	stopset.add('normal')
-	stopset.add('wow')
-	stopset.add('see')
-	stopset.add('fashion')
-	stopset.add('red')
-	stopset.add('carpet')
-	stopset.add('tonight')
-	stopset.add('styles')
-	stopset.add('stylist')
-	stopset.add('yay')
-	stopset.add('got')
-	stopset.add('categories')
-	stopset.add('biggest')
-	stopset.add('guy')
-	stopset.add('damn')
-	stopset.add('funny')
-	stopset.add('biggest')
-	stopset.add('bad')
-	#stopset.add('')
+	for word in ignoredWords:
+		stopset.add(word)
 	for i in range(0,len(words)):
 		stopset.add(words[i])
 	return stopset
 
+#searches the tweets and finds winners
 def searchTweets(awards,nominees,inputFile):
-	start_time = time.time()
-	print "Searching for top tweets..."
+	print "Searching for top tweets for award winners..."
 	data = []
 	with open('../' + inputFile) as f:
 	    for line in f:
 	        data.append(json.loads(line))
+
+	#create the stopset of ignored words for each award
 	award_stopsets = []
 	for award in awards:
 		stopset = removeIgnored(award)
@@ -110,140 +61,68 @@ def searchTweets(awards,nominees,inputFile):
 					 [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 	award_unigrams =[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],
 					 [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
-
 	counter = 0
 	for tweet in data[0]: 
 		tweetText = tweet["text"].lower()	
 		tweetText = remove_punctuation(tweetText)
 
+		#checks if the tweet matches an award. if so, add unigrams and bigrams to array 
 		for i in range(0, len(awards)):
 			award = remove_punctuation(awards[i].lower())
-			#if i <= 25:
 			awardTokenNotFound = False
-			# award = remove_punctuation(awards[i].lower())
-
 			if award not in tweetText:
 				awardTokenNotFound = True
 			if awardTokenNotFound is False:
-				tweetTokens = nltk.word_tokenize(tweetText)
+				tweetTokens = nltk.word_tokenize(tweetText)#create the unigrams
 				words = re.findall('\w+', tweetText) #seperate the words
 				bigrams = zip(words, words[1:]) #create the bigrams
 
-
-				#add to array of unigrams
-				for tok in tweetTokens:#add appropriate unigrams
+				#add to array of unigrams if not an ignored word
+				for tok in tweetTokens:
 					if tok not in award_stopsets[i]:
 						award_unigrams[i].append(tok)
 
-				#add to array of bigams
+				#add to array of bigams if not an ignored word
 				for bi in bigrams:
 					if bi[0] not in award_stopsets[i] and bi[1] not in award_stopsets[i]:
-						award_bigrams[i].append(bi)
-			# else:
-			# 	awardTokenNotFound = False
-			# 	if award not in tweetText:
-			# 		awardTokenNotFound = True
-			# 	if awardTokenNotFound is False:
-			# 		lTokens = nltk.word_tokenize(tweet['text'])
-			# 		lTokens = nltk.pos_tag(lTokens)
-
-			# 		# lTagDict = findtags('NNP', lTokens)
-			# 		# if lTagDict.has_key("NNP"):
-			# 		# 	words = lTagDict["NNP"]
-			# 		# 	bigrams = zip(words,words[1:])
-			# 		words = re.findall('\w+', tweetText) #seperate the words
-			# 		bigrams = zip(words, words[1:])
-			# 		for bi in bigrams:
-			# 			if bi[0].lower() not in award_stopsets[i] and bi[1].lower() not in award_stopsets[i]:
-			# 				award_bigrams[i].append(bi)
-
-			# 		# for tag in sorted(lTagDict):
-			# 		#     print tag, lTagDict[tag]
-
-			# 		for token in lTokens:
-			# 			if token[1] == 'NNP':
-			# 				if token[0].lower() not in award_stopsets[i]:
-			# 					award_unigrams[i].append(token[0])
-					
+						award_bigrams[i].append(bi)	
 		counter+=1
-		if counter%1000==0:
+		if counter%10000==0:#prints progress
 			print "Tweets scanned: " + str(counter)
-
 
 	winners =[]
 	for i in range(0,len(awards)):
 		if i is 25:
-			#find the cecile winner on own
+			#find the cecile winner on own, since we dont have a predetermined list of nominees
+			#we will just go by the highest count
 			fdistBigram = nltk.FreqDist(award_bigrams[i])
 			topBi = fdistBigram.most_common(10)
-			# print "top bigrams for Cecil B. DeMille award"
-			# print topBi
 			biPart1 = (topBi[0][0])[0]
 			biPart2 = (topBi[0][0])[1]
 			winner = biPart1 + " " + biPart2
 			winners.append(winner)
-		# elif i >= 26: 
-		# 	# #find the winners for the fun goals
-		# 	# fdistBigram = nltk.FreqDist(award_bigrams[i])
-		# 	# topBi = fdistBigram.most_common(10)
-		# 	# print "top bigrams for " + awards[i]
-		# 	# print topBi
-		# 	# biPart1 = (topBi[0][0])[0]
-		# 	# biPart2 = (topBi[0][0])[1]
-		# 	# winner = biPart1 + " " + biPart2
-		# 	fdistUnigram = FreqDist(award_unigrams[i])
-		# 	topUni = fdistUnigram.most_common(10)
-		# 	fdistBigram = nltk.FreqDist(award_bigrams[i])
-		# 	topBi = fdistBigram.most_common(10)
-		# 	print '================================================'
-		# 	print "top unigrams for " + awards[i]
-		# 	print topUni
-		# 	print '================================================'
-		# 	print "top bigrams for " + awards[i]
-		# 	print topBi
-		# 	#winners.append(winner)
 		else:
+			#find the other awards
 			fdistUnigram = FreqDist(award_unigrams[i])
 			topUni = fdistUnigram.most_common(10)
 			fdistBigram = nltk.FreqDist(award_bigrams[i])
 			topBi = fdistBigram.most_common(10)
-			# print topUni
-			# print topBi
 			results = findWinner(topUni,topBi, nominees[i])
 			winner = results[0]
 			nominees[i]=results[1]
 			winners.append(winner)
-
-	elapsed_time = time.time() - start_time
-	print "Search length: " + str(elapsed_time)
-	#print winners
 	return winners,nominees
 
+#matches a winner based on the list of nominees
 def findWinner(topUnigrams, topBigrams, nominees):
-	# print topUnigrams
-	# print topBigrams
 	singleWordNom = False
 	for nom in nominees: #search nominees to see if any are single words
 		checkNom = nltk.word_tokenize(nom)
 		if len(checkNom)==1:
 			singleWordNom= True
-			#print "Using unigrams instead..."
 			break
-	# for i in range(0,len(topUnigrams)):
-	# 	for j in range (0,len(nominees)):
-	# 		biPart1 = (topBigrams[i][0])[0]
-	# 		biPart2 = (topBigrams[i][0])[1]
-	# 		uni = topUnigrams[i][0]
-	# 		nominee = nominees[j].lower()
-	# 		if singleWordNom:#use unigram search if single words nominee
-	# 			if nominee.find(uni)!=-1:
-	# 				return nominees[j]
-	# 				break
-	# 		else:
-	# 			if nominee.find(biPart1)!= -1 or nominee.find(biPart2)!=-1:
-	# 				return nominees[j]
-	# 				break
-	if singleWordNom:
+
+	if singleWordNom:#if any of the nominees are single words, use unigrams to match
 		for i in range(0,len(topUnigrams)):
 			for j in range (0,len(nominees)):
 				uni = topUnigrams[i][0]
@@ -253,7 +132,7 @@ def findWinner(topUnigrams, topBigrams, nominees):
 					nominees.remove(winner)
 					return winner,nominees
 					break
-	else:
+	else:#if none of the nominees are single words, use bigrams to match
 		for i in range(0,len(topBigrams)):
 			for j in range (0,len(nominees)):
 				biPart1 = (topBigrams[i][0])[0]
@@ -264,10 +143,10 @@ def findWinner(topUnigrams, topBigrams, nominees):
 					nominees.remove(winner)
 					return winner,nominees
 					break
-				
+	
+#similar to searchTweets, searches for fun goal terms			
 def searchFunGoals(keywords,inputFile):
-	start_time = time.time()
-	print "Searching for top tweets..."
+	print "Searching for top tweets for fun goals..."
 	data = []
 	with open('../' + inputFile) as f:
 	    for line in f:
@@ -294,44 +173,32 @@ def searchFunGoals(keywords,inputFile):
 			if keyword not in tweetText:
 				keywordTokenNotFound = True
 			if keywordTokenNotFound is False:
+				#tokenize the tweet text and filter by pos so we can get proper nouns later
 				lTokens = nltk.word_tokenize(tweet['text'])
 				lTokens = nltk.pos_tag(lTokens)
-
-				# lTagDict = findtags('NNP', lTokens)
-				# if lTagDict.has_key("NNP"):
-				# 	words = lTagDict["NNP"]
-				# 	bigrams = zip(words,words[1:])
 				words = re.findall('\w+', tweetText) #seperate the words
-				bigrams = zip(words, words[1:])
-				for bi in bigrams:
+				bigrams = zip(words, words[1:])#create bigrams from unigrams
+				for bi in bigrams:#add the bigrams
 					if bi[0].lower() not in keyword_stopsets[i] and bi[1].lower() not in keyword_stopsets[i]:
 						keyword_bigrams[i].append(bi)
 
-				# for tag in sorted(lTagDict):
-				#     print tag, lTagDict[tag]
-
-				for token in lTokens:
+				for token in lTokens:#only add the proper noun unigrams
 					if token[1] == 'NNP':
 						if token[0].lower() not in keyword_stopsets[i]:
 							keyword_unigrams[i].append(token[0])
-					
 		counter+=1
-		if counter%1000==0:
+		if counter%10000==0:#prints progress 
 			print "Tweets scanned: " + str(counter)
 
 	results =[]
+	#this loop goes through each fun goal search term
+	#checks if a proper noun unigram matches a bigram for that search term
+	#if so, add to the results
 	for i in range(0,len(keywords)):
 		fdistUnigram = FreqDist(keyword_unigrams[i])
 		topUni = fdistUnigram.most_common(10)
 		fdistBigram = nltk.FreqDist(keyword_bigrams[i])
-		topBi = fdistBigram.most_common(10)
-		print '================================================'
-		print "top unigrams for " + keywords[i]
-		print topUni
-		print '================================================'
-		print "top bigrams for " + keywords[i]
-		print topBi
-		
+		topBi = fdistBigram.most_common(10)	
 		matches = []
 		for i in range(0, len(topUni)): 
 			foundMatch = False
@@ -342,9 +209,11 @@ def searchFunGoals(keywords,inputFile):
 				biPart1 = (topBi[j][0])[0]
 				biPart2 = (topBi[j][0])[1]
 				if uni in biPart1 or uni in biPart2:
+					#if this is not the first match, remove the bigram, 
+					#since it is a duplicate or similar to a bigram that has already been added to matches
 					if foundMatch == True:
 						topBi.remove(topBi[j])
-					else:
+					else:#if this is the first bigram that has matched, add it
 						if rating > 1:
 							ans = biPart1 + " " + biPart2
 							matches.append(ans)
@@ -352,11 +221,6 @@ def searchFunGoals(keywords,inputFile):
 				j+=1
 		matches = remove_duplicates(matches)
 		results.append(matches)
-
-
-	elapsed_time = time.time() - start_time
-	print "Search length: " + str(elapsed_time)
-	#print winners
 	return results
 
 

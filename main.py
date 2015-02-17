@@ -1,121 +1,185 @@
-from goldenglobe import findinfo
+import Tkinter
+from Tkinter import *
+import tkMessageBox
+import json
 
-directory = {'Ben Affleck': 'Argo', 'Kathryn Bigelow' : "Zero Dark Thirty", 'Ang Lee': 'Life of Pi', 'Steven Speilberg': 'Lincoln',
-		  'Quentin Tarantino': 'Django Unchained', 'Jessica Chastain':'Zero Dark Thirty', 'Marion Cotillard': 'Rust and Bone',
-		  'Helen Mirren':'Hitchcock', 'Naomi Watts': 'The Impossible', 'Rachel Weisz': 'The Deep Blue Sea', 'Daniel Day-Lewis': 'Lincoln',
-		  'Richard Gere': 'Arbitage', 'John Hawkes': 'The Sessions', 'Joaquin Phoenix': 'The Master', 'Denzel Washington':'Flight',
-		  'Jack Black': 'Bernie', 'Bradley Cooper': 'Silver Linings Playbook', 'Hugh Jackman': 'Les Miserables', 'Ewan McGregor': 'Salmong Fishing in the Yemen', 
-		  'Bill Murray': 'Hyde Park on Hudson', 'Emily Blunt': 'Salmon Fishing in the Yemen', 'Judi Dench': 'The Best Exotic Marigold Hotel',
-		  'Jennifer Lawrence':'Silver Linings Playbook', 'Maggie Smith':'Quartet', 'Meryl Streep': 'Hope Springs', 'Amy Adams': 'The Master',
-		  'Sally Field':'Lincoln', 'Anne Hathaway':'Les Miserables', 'Helen Hunt':'The Sessions', 'Nicole Kidman':'The Paperboy', 'Alan Arkin':'Argo', 
-		  'Leonardo DiCaprio':'Django Unchained', 'Philip Seymour Hoffman':'The Master', 'Tommy Lee Jones':'Lincoln','Christoph Waltz':'Django Unchained',
-		  'Mark Boal':'Zero Dark Thirty', 'Tony Kushner':'Lincoln', "David O'Russell":'Silver Linings Playbook', 'Chris Terrio':'Argo',
-		  'For You': 'music and lyrics by Monty Powell, Keith Urban in "Act of Valor"', 'Not Running Anymore': 'music and lyrics by Jon Bon Jobi in "Stand Up Guys"',
-		  'Safe & Sound' : 'music and lyrics by Taylor Swift, John Paul White, Joy Williams, T Bone Burnett in "The Hunger Games"',
-		  'Skyfall': 'music and lyrics by Adele and Paul Epworth in "Skyfall"', 'Suddenly':'music by Claude-Michel Stchonberg and lyrics by Herbert Kretzmer and Alain Boublil in "Les Miserables"',
-		  'Mychael Danna': 'Life of Pi', 'Alexandre Desplat':'Argo', 'Dario Marianelli':'Anna Karenina', 'Tom Tykwer, Johnny Klimek and Reinhold Heil':'Cloud Atlas',
-		  'John Williams':'Lincoln', 'Steve Buscemi':'Boardwalk Empire', 'Bryan Cranston':'Breaking Bad', 'Jeff Daniels':'The Newsroom',
-		  'Jon Hamm':'Mad Men', 'Damian Lewis':'Homeland', 'Zooey Deschanel':'New Girl', 'Julia Louis-Dreyfus':'Veep', 'Lena Dunham':'Girls', 
-		  'Tina Fey':'30 Rock', 'Amy Poehler':'Parks and Recreation', 'Alex Baldwin':'30 Rock', 'Don Cheadle':'House of Lies', 
-		  'Louis C.K.':'Louie', 'Matt LeBlanc':'Episodes', 'Jim Parsons':'The Big Bang Theory', 'Nicole Kidman':'Hemingway & Gellhorn', 
-		  'Jessica Lange':'American Horror Story:Asylum', 'Sienna Miller':'The Girl', 'Julianna Moores':'Game Change', 'Sigourney Weaver':'Political Animals', 
-		  'Kevin Costner':'Hatfields & McCoys', 'Benedict Cumberbatch':'Sherlock(Masterpiece)', 'Woody Harrelson':'Game Change', 'Toby Jones':'The Girl', 
-		  'Clive Owen':'Hemingway & Gellhorn', 'Hayden Panettiere':'Nashville', 'Archie Panjabi':'The Good Wife', 'Sarah Paulson':'Game Change',
-		  'Maggie Smith':'Downtown Abbey:Season 2', 'Sofia Vergara':'Modern Family', 'Max Greenfield':'New Girl', 'Ed Harris':'Game Change', 'Danny Huston':'Magic City', 
-		  'Eric Stonestreet':'Modern Family'}
+import findwinners
+top = Tkinter.Tk()
 
-MPDrama = ["Lincoln", "Django Unchained", "Life of Pi", "Argo", "Zero Dark Thirty"]
-MPMusicComedy = ["The Best Exotic Marigold Hotel", "Les Miserables", "Moonrise Kingdom", "Salmon Fishing in the Yemen", "Silver Linings Playbook"]
-MPDirector = ["Ben Affleck", "Kathryn Bigelow", "Ang Lee", "Steven Steilberg", "Quentin Tarantino"]
-MPActressDrama = ["Jessica Chastain", "Marion Cotillard", 'Helen Mirren', 'Naomi Watts', 'Rachel Weisz']
-MPActorDrama = ['Daniel Day-Lewis', 'Richard Gere', 'John Hawkes', 'Joaquin Phoenix', 'Denzel Washington']
-MPActorMusicComedy = ['Jack Black', 'Bradley Cooper', 'Hugh Jackman', 'Ewan McGregor', 'Bill Murray']
-MPActressMusicComedy = ['Emily Blunt', 'Judi Dench', 'Jennifer Lawrence', 'Maggie Smith', 'Meryl Streep']
-MPSupportingActress = ['Amy Adams', 'Sally Field', 'Anne Hathaway', 'Helen Hunt', 'Nicole Kidman']
-MPSupportingActor = ['Alan Arkin', 'Leonardo DiCaprio', 'Philip Seymour Hoffman', 'Tommy Lee Jones', 'Christoph Waltz']
-MPScreenplay = ['Mark Boal', 'Tony Kushner', "David O'Russell", 'Quentin Tarantino', 'Chris Terrio']
-MPForeign = ['Amour','A Royal Affair', 'The Intouchables', 'Kon-Tiki', 'Rust and Bone']
-MPAnimated = ['Rise of the Guardians', 'Brave', 'Frankenweenie', 'Hotel Transylvania', 'Wreck-It Ralph']
-MPSong = ['For You', 'Not Running Anymore', 'Safe & Sound', 'Skyfall', 'Suddenly']
-MPScore = ['Mychael Danna', 'Alexandre Desplat', 'Dario Marianelli', 'Tom Tykwer, Johnny Klimek, Reinhold Heil', 'John Williams']
-
-TVMusicComedy = ['The Big Bang Theory', 'Episodes' , 'Girls', 'Modern Family', 'Smash']
-TVDrama = ['Breaking Bad', 'Boardwalk Empire', 'Downtown Abbey', 'Homeland', 'The Newsroom']
-TVActressDrama = ['Connie Britton', 'Glenn Close', 'Claire Danes', 'Michelle Dockery', 'Julianna Margulies']
-TVActorDrama = ['Steve Buscemi', 'Bryan Cranston', 'Jeff Daniels', 'Jon Hamm', 'Damian Lewis']
-TVActressComedy = ['Zooey Deschanel', 'Julia Louis-Dreyfous', 'Lena Dunham', 'Tina Fey', 'Amy Poehler']
-TVActorComedy = ['Alec Baldwin', 'Don Cheadle', 'Louis C.K.', 'Matt LeBlanc', 'Jim Parsons']
-TVMiniseries = ['Game Change', 'The Girl', 'Hatfields & McCoys', 'The Hour', 'Political Animals']
-TVActressMiniseries = ['Nicole Kidman', 'Jessica Lange', 'Sienna Miller', 'Julianne Moore', 'Sigourney Weaver']
-TVActorMiniSeries = ['Kevin Costner', 'Benedict Cumberbatch', 'Woody Harrelson', 'Toby Jones', 'Clive Owen']
-TVSupportingActress = ['Hayden Panettiere', 'Archie Panjabi', 'Sarah Paulson' , 'Maggie Smith', 'Sofia Vergara']
-TVSupportingActor = ['Max Greenfield', 'Ed Harris', 'Danny Huston', 'Mandy Patinkin', 'Eric Stonestreet']
+awardsList =   ['Best Motion Picture - Drama', 
+                'Best Motion Picture - Comedy or Musical', 
+                'Best Director - Motion Picture', 
+                'Best Performance by an Actress in a Motion Picture - Drama',
+                'Best Performance by an Actor in a Motion Picture - Drama', 
+                'Best Performance by an Actor in a Motion Picture - Comedy Or Musical', 
+                'Best Performance by an Actress in a Motion Picture - Comedy Or Musical',
+                'Best Performance by an Actress In A Supporting Role in a Motion Picture', 
+                'Best Performance by an Actor In A Supporting Role in a Motion Picture', 
+                'Best Screenplay - Motion Picture', 
+                'Best Foreign Language Film', 
+                'Best Animated Feature Film', 
+                'Best Original Song - Motion Picture', 
+                'Best Original Score - Motion Picture', 
+                'Best Television Series - Comedy Or Musical', 
+                'Best Television Series - Drama',
+                'Best Performance by an Actress In A Television Series - Drama', 
+                'Best Performance by an Actor In A Television Series - Drama', 
+                'Best Performance by an Actress In A Television Series - Comedy Or Musical', 
+                'Best Performance by an Actor In A Television Series - Comedy Or Musical',
+                'Best Mini-Series Or Motion Picture Made for Television',
+                'Best Performance by an Actress In A Mini-series or Motion Picture Made for Television', 
+                'Best Performance by an Actor In A Mini-series or Motion Picture Made for Television', 
+                'Best Performance by an Actress in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television', 
+                'Best Performance by an Actor in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television',
+                'Cecil B. DeMille Award']
 
 
-print "1: Best Motion Picture - Drama"
-print "2: X"
-print "3: X"
-print "4: X"
-print "5: X"
-print "6: X"
-print "7: X"
-print "8: X"
-print "9: X"
-print "10: X"
-print "11: X"
-print "12: X"
-print "13: X"
-print "14: X"
-print "15: X"
-print "16: X"
-print "17: X"
-print "18: X"
-print "19: X"
-print "20: X"
-print "21: X"
-print "22: X"
-print "23: X"
-print "24: X"
-print "25: X"
-print "26: X"
+json13=open('gg13answers.json')
+data13 = json.load(json13)
 
-var = raw_input("Choose the number of award you want to see: ")
-print "you entered", var
+json15=open('gg15answers.json')
+data15 = json.load(json15)
 
-if (var == "1"):
-	print "u made it here"
-	top20=findinfo("best supporting actress")
-	unis=top20[0]
-	bis=top20[1]
-	uniarray=[]
-	biarray=[]
-	for x in range(0,5):
-		uniarray.append(unis[x][0])
-	for x in range(0,5):
-		temp = bis[x][0]
-		biarray.append(temp)
-	print "================================================"
-	#for x in range (0,len(uniarray)):
-	#	print uniarray[x]
-	print "================================================"
-	#for x in range (0,len(biarray)):
-	#	print biarray[x]
-	for y in range(0,len(MPSupportingActress)):
-		for x in range (0,5):
-			temp = biarray[x]
-			first=temp[0]
-			second=temp[1]
-			nominee = MPSupportingActress[y]
-			nominee = nominee.lower()
-			#print nominee
-			#print first
-			#print second
-			#print uniarray[x]
-			#print MPDrama[y]
-			print "+++++++++++++++++++++++++++++++++++++"
-			if first or second in nominee:
-				if uniarray[x] in nominee:
-					print MPSupportingActress[y]
-				break
-					#y=len(MPDrama)
-	
+fun13=open('funGoals13.json')
+f2013 = json.load(fun13)
+
+fun15=open('funGoals15.json')
+f2015 = json.load(fun15)
+
+y= IntVar()
+y.set(2015)  # initializing the choice, i.e. Python
+
+
+def ShowChoice():
+    year= y.get()
+
+#called when one of the award buttons is clicked
+#retreives the answer from the json file and prints out a message
+def awards(index):
+    if y.get() == 2015:
+        winner = data15['data']['structured'][awardsList[index-1].lower()]['winner']
+        nominees = data15['data']['structured'][awardsList[index-1].lower()]['nominees']
+        presenter = data15['data']['structured'][awardsList[index-1].lower()]['presenters']
+    else:
+        winner = data13['data']['structured'][awardsList[index-1].lower()]['winner']
+        nominees = data13['data']['structured'][awardsList[index-1].lower()]['nominees']
+        presenter = data13['data']['structured'][awardsList[index-1].lower()]['presenters']
+    presenters = ''
+    for pres in presenter:
+        presenters += "\n" + pres
+    nomineeList=''
+    for nom in nominees: 
+        nomineeList += "\n" + nom
+    message = "Winner: \n" + winner + "\n===============\nPresented by: " + presenters + "\n===============\nNominees for the award: " + nomineeList
+    tkMessageBox.showinfo( "INFO:", message);
+
+#called when a fungoal button is clicked
+#retrieves the answer from the json file and prints out a message 
+def fungoals(index):
+    print ""
+    if y.get() ==2015:
+        results = f2013['answers'][index-1]
+
+    else:
+        results = f2015['answers'][index-1]
+    #print out the results
+    if len(results)==0:
+        message = "Could not find any significant chatter on twitter!"
+    else: 
+        message = "People are talking about: "
+        for person in results: 
+            message += "\n" + person 
+    tkMessageBox.showinfo( "INFO:", message);
+
+
+Radiobutton(top,
+            text='2015', 
+            variable=y, 
+            command=ShowChoice,
+            value=2015).grid(row=0, column=1)
+Radiobutton(top,
+            text='2013', 
+            variable=y, 
+            command=ShowChoice,
+            value=2013).grid(row=1, column=1)
+
+# Code to add widgets will go here...
+MPD = Tkinter.Button(top, text ="Best Motion Picture - Drama",command= lambda: awards(1),width=55, height=2, wraplength=55)
+MPC = Tkinter.Button(top, text ='Best Motion Picture - Comedy or Musical',command= lambda: awards(2),width=55, height=2, wraplength=55)
+MPAD= Tkinter.Button(top, text ='Best Director - Motion Picture',command= lambda: awards(3),width=55, height=2, wraplength=55)
+MPAcD = Tkinter.Button(top, text ='Best Performance by an Actress in a Motion Picture - Drama',command= lambda: awards(4),width=55, height=2, wraplength=55)
+MPAC = Tkinter.Button(top, text ='Best Performance by an Actor in a Motion Picture - Drama',command= lambda: awards(5),width=55, height=2, wraplength=55)
+MPAcC = Tkinter.Button(top, text ='Best Performance by an Actor in a Motion Picture - Comedy Or Musical',command= lambda: awards(6) ,width=55, height=2, wraplength=55)
+MPSA = Tkinter.Button(top, text ='Best Performance by an Actress in a Motion Picture - Comedy Or Musical',command= lambda: awards(7) ,width=55, height=2, wraplength=55)
+MPSAc = Tkinter.Button(top, text ='Best Performance by an Actress In A Supporting Role in a Motion Picture',command= lambda: awards(8),width=55, height=2, wraplength=55)
+MPDir = Tkinter.Button(top, text ='Best Performance by an Actor In A Supporting Role in a Motion Picture',command= lambda: awards(9) ,width=55, height=2, wraplength=55)
+MPScreen = Tkinter.Button(top, text ='Best Screenplay - Motion Picture',command= lambda: awards(10) ,width=55, height=2, wraplength=55)
+MPScore = Tkinter.Button(top, text ='Best Foreign Language Film',command= lambda: awards(11),width=55, height=2, wraplength=55)
+MPSong = Tkinter.Button(top, text ='Best Animated Feature Film',command= lambda: awards(12) ,width=55, height=2, wraplength=55)
+MPAnimate = Tkinter.Button(top, text ='Best Original Song - Motion Picture',command= lambda: awards(13) ,width=55, height=2, wraplength=55)
+MPFor = Tkinter.Button(top, text ='Best Original Score - Motion Picture',command= lambda: awards(14) ,width=55, height=2, wraplength=55)
+TVD = Tkinter.Button(top, text ='Best Television Series - Comedy Or Musical',command= lambda: awards(15),width=55, height=2, wraplength=55)
+TVC = Tkinter.Button(top, text ='Best Television Series - Drama',command= lambda: awards(16) ,width=55, height=2, wraplength=55)
+TVAD = Tkinter.Button(top, text ='Best Performance by an Actress In A Television Series - Drama',command= lambda: awards(17) ,width=55, height=2, wraplength=55)
+TVAcD = Tkinter.Button(top, text ='Best Performance by an Actor In A Television Series - Drama',command= lambda: awards(18) ,width=55, height=2, wraplength=55)
+TVAC = Tkinter.Button(top, text ='Best Performance by an Actress In A Television Series - Comedy Or Musical',command= lambda: awards(19) ,width=55, height=2, wraplength=55)
+TVAcC = Tkinter.Button(top, text ='Best Performance by an Actor In A Television Series - Comedy Or Musical',command= lambda: awards(20) ,width=55, height=2, wraplength=55)
+MiniA = Tkinter.Button(top, text ='Best Mini-Series Or Motion Picture Made for Television',command= lambda: awards(21) ,width=55, height=2, wraplength=55)
+MiniAc = Tkinter.Button(top, text ='Best Performance by an Actress In A Mini-series or Motion Picture Made for Television',command= lambda: awards(22) ,width=55, height=2, wraplength=55)
+MiniSupA= Tkinter.Button(top, text ='Best Performance by an Actor In A Mini-series or Motion Picture Made for Television',command= lambda: awards(23),width=55, height=2, wraplength=55)
+MiniSupAc = Tkinter.Button(top, text ='Best Performance by an Actress in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television',command= lambda: awards(24) ,width=55, height=2, wraplength=55)
+BestMini = Tkinter.Button(top, text ='Best Performance by an Actor in a Supporting Role in a Series, Mini-Series or Motion Picture Made for Television',command= lambda: awards(25),width=55, height=2, wraplength=55)
+CBD = Tkinter.Button(top, text ="Cecil B. DeMille Award",command= lambda: awards(26) ,width=55, height=2, wraplength=55)
+BestD = Tkinter.Button(top, text ="Best Dressed",command= lambda: fungoals(1) ,width=55, height=2, wraplength=55)
+WorstD = Tkinter.Button(top, text ="Worst Dressed",command= lambda: fungoals(2),width=55, height=2, wraplength=55)
+WorstS = Tkinter.Button(top, text ="Worst Speech",command= lambda: fungoals(3),width=55, height=2, wraplength=55)
+BestS = Tkinter.Button(top, text ="Best Speech",command= lambda: fungoals(4),width=55, height=2, wraplength=55)
+Snub = Tkinter.Button(top, text ="Biggest Snub",command= lambda: fungoals(5),width=55, height=2, wraplength=55)
+LFunny = Tkinter.Button(top, text ="Least Funny",command= lambda: fungoals(6),width=55, height=2, wraplength=55)
+Funny = Tkinter.Button(top, text ="Funniest",command= lambda: fungoals(7),width=55, height=2, wraplength=55)
+Handsome = Tkinter.Button(top, text ="Most Handsome",command= lambda: fungoals(8),width=55, height=2, wraplength=55)
+w = Text(top, width=40, height=1,pady=0)    
+w2 = Text(top, width=40, height=1,pady=0)
+
+
+w.insert(INSERT, "Select a year on the right. Then click")
+w2.insert(INSERT, "one of the buttons below for more info")
+
+w.grid(row=0, column=0)
+w2.grid(row=1, column=0)
+MPD.grid(row=2,column=0)
+MPC.grid(row=3,column=0)
+MPAD.grid(row=4,column=0)
+MPAcD.grid(row=5,column=0)
+MPAC.grid(row=6,column=0)
+MPAcC.grid(row=7,column=0)
+MPSA.grid(row=8,column=0)
+MPSAc.grid(row=9,column=0)
+MPDir.grid(row=10,column=0)
+MPScreen.grid(row=11,column=0)
+MPScore.grid(row=12,column=0)
+MPSong.grid(row=13,column=0)
+MPAnimate.grid(row=2,column=1)
+MPFor.grid(row=3,column=1)
+TVD.grid(row=4,column=1)
+TVC.grid(row=5,column=1)
+TVAD.grid(row=6,column=1)
+TVAcD.grid(row=7,column=1)
+TVAC.grid(row=8,column=1)
+TVAcC.grid(row=9,column=1)
+MiniA.grid(row=10,column=1)
+MiniAc.grid(row=11,column=1)
+MiniSupA.grid(row=12,column=1)
+MiniSupAc.grid(row=13,column=1)
+BestMini.grid(row=2,column=2)
+CBD.grid(row=3,column=2)
+BestD.grid(row=4,column=2)
+WorstD.grid(row=5,column=2)
+WorstS.grid(row=6,column=2)
+BestS.grid(row=7,column=2)
+Snub.grid(row=8,column=2)
+LFunny.grid(row=9,column=2)
+Funny.grid(row=10,column=2)
+Handsome.grid(row=11,column=2)
+
+top.mainloop()

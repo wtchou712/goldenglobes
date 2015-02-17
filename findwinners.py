@@ -1,8 +1,9 @@
-from goldenglobeWill import searchTweets
-from goldenglobeWill import findWinner
-from goldenglobeWill import remove_punctuation
-from goldenglobeWill import searchFunGoals
+from searchtweets import searchTweets
+from searchtweets import findWinner
+from searchtweets import remove_punctuation
+from searchtweets import searchFunGoals
 import json
+import time
 from collections import OrderedDict
 
 directory13 = {'Ben Affleck': 'Argo', 'Kathryn Bigelow' : "Zero Dark Thirty", 'Ang Lee': 'Life of Pi', 'Steven Speilberg': 'Lincoln',
@@ -39,7 +40,6 @@ MPActressMusicComedy13 = ['Emily Blunt', 'Judi Dench', 'Jennifer Lawrence', 'Mag
 MPSupportingActress13 = ['Amy Adams', 'Sally Field', 'Anne Hathaway', 'Helen Hunt', 'Nicole Kidman']
 MPSupportingActor13 = ['Alan Arkin', 'Leonardo DiCaprio', 'Philip Seymour Hoffman', 'Tommy Lee Jones', 'Christoph Waltz']
 MPScreenplay13 = ['Django Unchained','Zero Dark Thirty','Lincoln','Silver Linings Playbook','Argo']
-#['Mark Boal', 'Tony Kushner', "David O'Russell", 'Quentin Tarantino', 'Chris Terrio']
 MPForeign13 = ['Amour','A Royal Affair', 'The Intouchables', 'Kon Tiki', 'Rust and Bone']
 MPAnimated13 = ['Rise of the Guardians', 'Brave', 'Frankenweenie', 'Hotel Transylvania', 'Wreck-It Ralph']
 MPSong13 = ['Act of Valor', 'Stand Up Guys', 'The Hunger Games', 'Skyfall', 'Les Miserables']
@@ -251,25 +251,26 @@ funGoalSearchList = ['Best Dressed',
 			  		 'hilarious',
 			  		 'most handsome']
 
-
+#function to find all the winnners for the award and output to a json file
 def findAllAwards(year, allNominees, awardsList, presenterList, inputFile, outputName):
+	#set the start time so we can time how long this takes
+	print "Finding awards for " + str(year)
+	start_time = time.time()
 	results= searchTweets(searchList, allNominees, inputFile)
+	elapsed_time = time.time() - start_time
+	print "Search length: " + str(elapsed_time)
 	winners = results[0]
 	allNominees = results[1]
 
-	# print awardsList
-	print winners
-
 	for i in range(0,len(awardsList)):
 		print awardsList[i] + " goes to " + winners[i]
-
 	nomineeList = []
 	for nominees in allNominees:
 		nomineeList = nominees + nomineeList
 
-
 	results = {}
 	metadata = {}
+	names = {}
 	hosts = {}
 	nominees = {}
 	awards = {}
@@ -277,7 +278,7 @@ def findAllAwards(year, allNominees, awardsList, presenterList, inputFile, outpu
 	data = {}
 	structured = {}
 	unstructured = {}
-
+	mappings = {}
 	hosts['method'] = "hardcoded"
 	hosts['method_description'] = ''
 	nominees['method'] = "hardcoded"
@@ -287,28 +288,24 @@ def findAllAwards(year, allNominees, awardsList, presenterList, inputFile, outpu
 	presenters['method'] = "hardcoded"
 	presenters['method_description'] = ''
 	metadata['year'] = year
-	metadata['hosts'] = hosts
-	metadata['nominees'] = nominees
-	metadata['awards'] = awards
-	metadata['presenters'] = presenters
-
+	names['hosts'] = hosts
+	names['nominees'] = nominees
+	names['awards'] = awards
+	names['presenters'] = presenters
+	mappings['nominees'] = nominees
+	mappings['presenters'] = presenters
+	metadata['names'] = names
+	metadata['mappings'] = mappings
 	unstructured['hosts'] = ['Tina Fey', 'Amy Poehler']
-	#add the winner for cecile
-	#winners.append('jodie foster')
-	#presenterList.append(['robert downey, jr.'])
-	#awardsList.append("Cecil B. DeMille Award")
-
 	unstructured['winners'] = winners
 	unstructured['awards'] = awardsList
+
 	#get a list of presenters
 	presenterUnstructured = []
 	for presenter in presenterList:
 		presenterUnstructured = presenterUnstructured + presenter
-
 	unstructured['presenters'] = presenterUnstructured
 	unstructured['nominees'] = nomineeList
-
-
 	for i in range(0, len(winners)):
 		award = {}
 		if i is 25:#the Cecile B DeMille award does not have nominees
@@ -319,41 +316,29 @@ def findAllAwards(year, allNominees, awardsList, presenterList, inputFile, outpu
 		award['presenters'] = presenterList[i]
 		structured[awardsList[i]] = award
 
-	#add the cecil b demille winner
-	# award = {}
-	# award['nominees']=[]
-	# print presenterList[25]
-	# award['presenters']=presenterList[25]
-	# award['winner'] = winners[25]
-	# structured[awardsList[25]] = award
-
 	data['unstructured']= unstructured
 	data['structured'] = structured
 	results['metadata'] = metadata
 	results['data'] = data
-
 	with open(outputName, 'w') as outfile:
 	    json.dump(OrderedDict(results), outfile)
 
-
+#finds all the answers to the fun goals
 def funGoals(keywords, inputFile,outputName):
+	start_time = time.time()
 	results = searchFunGoals(keywords,inputFile)
-	for i in range(0, len(keywords)):
-		print '=============================='
-		print keywords[i] + " returns "
-		print results[i]
 	data = {}
 	data['answers'] = results
+	elapsed_time = time.time() - start_time
+	print "Search length: " + str(elapsed_time)
 
 	with open(outputName, 'w') as outfile: 
 		json.dump(OrderedDict(data), outfile)
 
+findAllAwards(2013, allNominees13,awardsList13, presenters13, 'gg2013.json','gg13answers.json')
+findAllAwards(2015, allNominees15,awardsList15, presenters15, 'gg15mini.json','gg15answers.json')
 
-
-#writeAnswersToJSON(2013, allNominees13,awardsList13, presenters13, 'gg2013.json','data13.json')
-#writeAnswersToJSON(2015, allNominees15,awardsList15, presenters15, 'gg15mini.json','data15.json')
-
-#funGoals(funGoalSearchList, 'gg2013.json', 'funGoals13.json')
+funGoals(funGoalSearchList, 'gg2013.json', 'funGoals13.json')
 funGoals(funGoalSearchList, 'gg15mini.json', 'funGoals15.json')
 	
 
