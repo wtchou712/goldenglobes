@@ -1,6 +1,7 @@
 from goldenglobeWill import searchTweets
 from goldenglobeWill import findWinner
 from goldenglobeWill import remove_punctuation
+from goldenglobeWill import searchFunGoals
 import json
 from collections import OrderedDict
 
@@ -142,11 +143,11 @@ MPActorMusicComedy15 = ['Michael Keaton', 'Ralph Fiennes', 'Bill Murray', 'Joaqu
 MPActressMusicComedy15 = ['Amy Adams', 'Emily Blunt', 'Helen Mirren', 'Julianne Moore', 'Quvenzhane Wallis']
 MPSupportingActress15 = ['Patricia Arquette', 'Jessica Chastain', 'Keira Knightley', 'Emma Stone', 'Meryl Streep']
 MPSupportingActor15 = ['J.K. Simmons', 'Robert Duvall', 'Ethan Hawke', 'Edward Norton', 'Mark Ruffalo']
-MPScreenplay15 = ['Alejandro Gonzalez Inarritu, Nicolas Giacobone, Armando Bo, Alexander Dinelaris, Jr.', 'Wes Anderson', 'Gillian Flynn', 'Richard Linklater', 'Graham Moore']
+MPScreenplay15 = ['Birdman', 'The Grand Budapest Hotel', 'Gone Girl', 'Boyhood', 'The Imitation Game']
 MPForeign15 = ['Leviathan', 'Force Majeure', 'Gett: The Trial of Viviane Amsalem', 'Ida', 'Tangerines']
 MPAnimated15 = ['How to Train Your Dragon 2', 'Big Hero 6', 'The Book of Life', 'The Boxtrolls', 'The Lego Movie']
-MPSong15 = ['Glory', 'Big Eyes', 'Mercy Is', 'Opportunity', 'Yellow Flicker Beat']
-MPScore15 = ['Johann Johannsson', 'Alexandre Desplat', 'Trent Reznore, Atticus Ross', 'Antonio Sanchez', 'Hans Zimmer']
+MPSong15 = ['Selma','Big Eyes', 'Noah', 'Annie', 'the hunger games: mockingjay - part 1']
+MPScore15 = ['The Theory of Everything', 'The Imitation Game', 'Gone Girl', 'Birdman', 'Interstellar']
 
 TVMusicComedy15 = ['Transparent', 'Girls', 'Jane the Virgin', 'Orange Is the New Black', 'Silicon Valley']
 TVDrama15 = ['The Affair', 'Game of Thrones', 'Downton Abbey', 'The Good Wife', 'House of Cards']
@@ -163,11 +164,32 @@ TVSupportingActor15 = ['Matt Bomer', 'Alan Cumming', 'Colin Hanks', 'Bill Murray
 allNominees15 = [MPDrama15, MPMusicComedy15, MPDirector15, MPActressDrama15, MPActorDrama15, MPActorMusicComedy15, MPActressMusicComedy15, MPSupportingActress15, MPSupportingActor15, MPScreenplay15, MPForeign15,
 			   MPAnimated15, MPSong15, MPScore15, TVMusicComedy15, TVDrama15, TVActressDrama15, TVActorDrama15, TVActressComedy15, TVActorComedy15, TVMiniseries15, TVActressMiniseries15,
 			   TVActorMiniSeries15,TVSupportingActress15, TVSupportingActor15]
-presenters15 = [['Meryl Streep'], ['Robert Downey, Jr.'], ['Harrison Ford'], ['Matthew McConaughey'], ['Gwyneth Paltrow'], ['Amy Adams'],['Ricky Gervais'], ['Jared Leto'], 
-			  ['Jennifer Aniston', 'Benedict Cumberbatch'], ['Bill Hader', 'Kristen Wiig'], ["Colin Farrell", "Lupita Nyong'o"], ['Kevin Hart', 'Salma Hayek'], ['Prince'], 
-			  ['Sienna Miller', 'Vince Vaughn'], ['Bryan Cranston', 'Kerry Washington'], ['Adam Levine','Paul Rudd'], ['Anna Faris','Chris Pratt'], ['David Duchovny', 'Katherine Heigl'], 
-			  ['Bryan Cranston','Kerry Washington'], ['Jane Fonda','Lily Tomlin'],['Jennifer Lopez','Jeremy Renner'],['Kate Beckinsale','Adrien Brody'],['Jennifer Lopez','Jeremy Renner'], 
-			  ['Jamie Dornan','Dakota Johnson'],['Katie Holmes','Seth Meyers']]
+presenters15 = [['Meryl Streep'], 
+			 	['Robert Downey, Jr.'], 
+			 	['Harrison Ford'], 
+			 	['Matthew McConaughey'], 
+			 	['Gwyneth Paltrow'], 
+			 	['Amy Adams'],
+			 	['Ricky Gervais'], 
+			 	['Jared Leto'], 
+			  	['Jennifer Aniston', 'Benedict Cumberbatch'], 
+			  	['Bill Hader', 'Kristen Wiig'], 
+			  	["Colin Farrell", "Lupita Nyong'o"], 
+			  	['Kevin Hart', 'Salma Hayek'], 
+			  	['Prince'], 
+			    ['Sienna Miller', 'Vince Vaughn'], 
+			    ['Bryan Cranston', 'Kerry Washington'], 
+			    ['Adam Levine','Paul Rudd'], 
+			    ['Anna Faris','Chris Pratt'],
+			    ['David Duchovny', 'Katherine Heigl'], 
+			   	['Bryan Cranston','Kerry Washington'], 
+			   	['Jane Fonda','Lily Tomlin'],
+			   	['Jennifer Lopez','Jeremy Renner'],
+			   	['Kate Beckinsale','Adrien Brody'],
+			   	['Jennifer Lopez','Jeremy Renner'], 
+			  	['Jamie Dornan','Dakota Johnson'],
+			  	['Katie Holmes','Seth Meyers'],
+			  	['Don Cheadle','Julianna Margulies']]
 awardsList15 = ['Best Motion Picture - Drama', 
 				'Best Motion Picture - Comedy or Musical', 
 				'Best Director - Motion Picture', 
@@ -219,25 +241,18 @@ searchList = ['Best Motion Picture - Drama',
 			  'Best Actor in a Miniseries or TV Movie', 
 			  'Best Supporting Actress in a TV Show, Miniseries or TV Movie', 
 			  'Best Supporting Actor in a TV Show, Miniseries or TV Movie',
-			  'Cecil B. DeMille Award',
-			  'Best Dressed',
-			  'Worst Dressed',
-			  'best party',
-			  'worst speech',
-			  'great speech',
-			  'jaw drop',
-			  'opening monologue',
-			  'best look']
-
-			  #bad taste
-			  #best jewelry
-			  #great makeup
-			  #controversial
-			  #discussed
-			  #
+			  'Cecil B. DeMille Award']
+funGoalSearchList = ['Best Dressed',
+			  		 'Worst Dressed',
+			  		 'worst speech',
+			  	 	 'great speech',
+			  		 'snub',
+			  		 'not funn',
+			  		 'hilarious',
+			  		 'most handsome']
 
 
-def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, outputName):
+def findAllAwards(year, allNominees, awardsList, presenterList, inputFile, outputName):
 	results= searchTweets(searchList, allNominees, inputFile)
 	winners = results[0]
 	allNominees = results[1]
@@ -245,84 +260,101 @@ def writeAnswersToJSON(year, allNominees, awardsList, presenterList, inputFile, 
 	# print awardsList
 	print winners
 
-	# for i in range(0,len(awardsList)):
-	# 	print awardsList[i] + " goes to " + winners[i]
+	for i in range(0,len(awardsList)):
+		print awardsList[i] + " goes to " + winners[i]
 
-	# nomineeList = []
-	# for nominees in allNominees:
-	# 	nomineeList = nominees + nomineeList
-
-
-	# results = {}
-	# metadata = {}
-	# hosts = {}
-	# nominees = {}
-	# awards = {}
-	# presenters = {}
-	# data = {}
-	# structured = {}
-	# unstructured = {}
-
-	# hosts['method'] = "hardcoded"
-	# hosts['method_description'] = ''
-	# nominees['method'] = "hardcoded"
-	# nominees['method_description'] = ''
-	# awards['method'] = "hardcoded"
-	# awards['method_description'] = ''
-	# presenters['method'] = "hardcoded"
-	# presenters['method_description'] = ''
-	# metadata['year'] = year
-	# metadata['hosts'] = hosts
-	# metadata['nominees'] = nominees
-	# metadata['awards'] = awards
-	# metadata['presenters'] = presenters
-
-	# unstructured['hosts'] = ['Tina Fey', 'Amy Poehler']
-	# #add the winner for cecile
-	# #winners.append('jodie foster')
-	# #presenterList.append(['robert downey, jr.'])
-	# #awardsList.append("Cecil B. DeMille Award")
-
-	# unstructured['winners'] = winners
-	# unstructured['awards'] = awardsList
-	# #get a list of presenters
-	# presenterUnstructured = []
-	# for presenter in presenterList:
-	# 	presenterUnstructured = presenterUnstructured + presenter
-
-	# unstructured['presenters'] = presenterUnstructured
-	# unstructured['nominees'] = nomineeList
+	nomineeList = []
+	for nominees in allNominees:
+		nomineeList = nominees + nomineeList
 
 
-	# for i in range(0, len(winners)):
-	# 	award = {}
-	# 	if i is 25:#the Cecile B DeMille award does not have nominees
-	# 		award['nominees']=[]
-	# 	else:
-	# 		award['nominees'] = allNominees[i]
-	# 	award['winner'] = winners[i]
-	# 	award['presenters'] = presenterList[i]
-	# 	structured[awardsList[i]] = award
+	results = {}
+	metadata = {}
+	hosts = {}
+	nominees = {}
+	awards = {}
+	presenters = {}
+	data = {}
+	structured = {}
+	unstructured = {}
 
-	# #add the cecil b demille winner
-	# # award = {}
-	# # award['nominees']=[]
-	# # print presenterList[25]
-	# # award['presenters']=presenterList[25]
-	# # award['winner'] = winners[25]
-	# # structured[awardsList[25]] = award
+	hosts['method'] = "hardcoded"
+	hosts['method_description'] = ''
+	nominees['method'] = "hardcoded"
+	nominees['method_description'] = ''
+	awards['method'] = "hardcoded"
+	awards['method_description'] = ''
+	presenters['method'] = "hardcoded"
+	presenters['method_description'] = ''
+	metadata['year'] = year
+	metadata['hosts'] = hosts
+	metadata['nominees'] = nominees
+	metadata['awards'] = awards
+	metadata['presenters'] = presenters
 
-	# data['unstructured']= unstructured
-	# data['structured'] = structured
-	# results['metadata'] = metadata
-	# results['data'] = data
+	unstructured['hosts'] = ['Tina Fey', 'Amy Poehler']
+	#add the winner for cecile
+	#winners.append('jodie foster')
+	#presenterList.append(['robert downey, jr.'])
+	#awardsList.append("Cecil B. DeMille Award")
 
-	# with open(outputName, 'w') as outfile:
-	#     json.dump(OrderedDict(results), outfile)
+	unstructured['winners'] = winners
+	unstructured['awards'] = awardsList
+	#get a list of presenters
+	presenterUnstructured = []
+	for presenter in presenterList:
+		presenterUnstructured = presenterUnstructured + presenter
+
+	unstructured['presenters'] = presenterUnstructured
+	unstructured['nominees'] = nomineeList
 
 
-writeAnswersToJSON(2013, allNominees13,awardsList13, presenters13, 'gg2013.json','data13.json')
+	for i in range(0, len(winners)):
+		award = {}
+		if i is 25:#the Cecile B DeMille award does not have nominees
+			award['nominees']=[]
+		else:
+			award['nominees'] = allNominees[i]
+		award['winner'] = winners[i]
+		award['presenters'] = presenterList[i]
+		structured[awardsList[i]] = award
+
+	#add the cecil b demille winner
+	# award = {}
+	# award['nominees']=[]
+	# print presenterList[25]
+	# award['presenters']=presenterList[25]
+	# award['winner'] = winners[25]
+	# structured[awardsList[25]] = award
+
+	data['unstructured']= unstructured
+	data['structured'] = structured
+	results['metadata'] = metadata
+	results['data'] = data
+
+	with open(outputName, 'w') as outfile:
+	    json.dump(OrderedDict(results), outfile)
+
+
+def funGoals(keywords, inputFile,outputName):
+	results = searchFunGoals(keywords,inputFile)
+	for i in range(0, len(keywords)):
+		print '=============================='
+		print keywords[i] + " returns "
+		print results[i]
+	data = {}
+	data['answers'] = results
+
+	with open(outputName, 'w') as outfile: 
+		json.dump(OrderedDict(data), outfile)
+
+
+
+#writeAnswersToJSON(2013, allNominees13,awardsList13, presenters13, 'gg2013.json','data13.json')
 #writeAnswersToJSON(2015, allNominees15,awardsList15, presenters15, 'gg15mini.json','data15.json')
+
+#funGoals(funGoalSearchList, 'gg2013.json', 'funGoals13.json')
+funGoals(funGoalSearchList, 'gg15mini.json', 'funGoals15.json')
 	
 
 
