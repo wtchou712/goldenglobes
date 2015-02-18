@@ -29,7 +29,7 @@ def remove_duplicates(values):
 
 ignoredWords = ['best', 'golden', 'globes', 'goldenglobes', 'goldenglobe', 'rt', 'actor', 'actress', 'co' , 'http', 'cecil', 'demille', 'perezhilton', 'wins',
 				'wtf', 'oscar', 'congratulations', 'director', 'category', 'right', '@', 'nbc', 'gives', 'academy', 'award', 'amp', 'eonline', 'list', 'photos',
-				'face', 'normal','wow','see','fashion','red','carpet','tonight','styles','stylist','yay', 'got','categories','biggest','guy','damn','funny','biggest',
+				'face', 'normal','wow','see','fashion','red','carpet','tonight','styles','stylist', 'got','categories','guy','damn','funny','biggest',
 				'bad','globe','luck','win','stylists','comedy','party','batman','billybob','ge','common','etglobes','need']
 
 #set the stopset based on the list of ignored words

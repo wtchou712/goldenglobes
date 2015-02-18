@@ -57,13 +57,13 @@ def ShowChoice():
 #retreives the answer from the json file and prints out a message
 def awards(index):
     if y.get() == 2015:
-        winner = data15['data']['structured'][awardsList[index-1].lower()]['winner']
-        nominees = data15['data']['structured'][awardsList[index-1].lower()]['nominees']
-        presenter = data15['data']['structured'][awardsList[index-1].lower()]['presenters']
+        winner = data15['data']['structured'][awardsList[index-1]]['winner']
+        nominees = data15['data']['structured'][awardsList[index-1]]['nominees']
+        presenter = data15['data']['structured'][awardsList[index-1]]['presenters']
     else:
-        winner = data13['data']['structured'][awardsList[index-1].lower()]['winner']
-        nominees = data13['data']['structured'][awardsList[index-1].lower()]['nominees']
-        presenter = data13['data']['structured'][awardsList[index-1].lower()]['presenters']
+        winner = data13['data']['structured'][awardsList[index-1]]['winner']
+        nominees = data13['data']['structured'][awardsList[index-1]]['nominees']
+        presenter = data13['data']['structured'][awardsList[index-1]]['presenters']
     presenters = ''
     for pres in presenter:
         presenters += "\n" + pres

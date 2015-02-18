@@ -336,10 +336,10 @@ def funGoals(keywords, inputFile,outputName):
 		json.dump(OrderedDict(data), outfile)
 
 findAllAwards(2013, allNominees13,awardsList13, presenters13, 'gg2013.json','gg13answers.json')
-findAllAwards(2015, allNominees15,awardsList15, presenters15, 'gg15mini.json','gg15answers.json')
+# findAllAwards(2015, allNominees15,awardsList15, presenters15, 'gg15mini.json','gg15answers.json')
 
-funGoals(funGoalSearchList, 'gg2013.json', 'funGoals13.json')
-funGoals(funGoalSearchList, 'gg15mini.json', 'funGoals15.json')
+# funGoals(funGoalSearchList, 'gg2013.json', 'funGoals13.json')
+# funGoals(funGoalSearchList, 'gg15mini.json', 'funGoals15.json')
 	
 
 

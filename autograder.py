@@ -133,11 +133,18 @@ def calc_awards(result,answer):
             else:
                 problems.append(r)
     if len(problems) > 0:
-        print "Could not find a match for:"
+        print "Could not find a match for the following results:"
     for p in problems:
         print p
+
+    problems = answer-intersection - set(translation.values())
+    if len(problems) > 0:
+        print "Could not find a match for the following answers:"
+    for p in problems:
+        print p
+
     # sum([edit_distance(t,translation[t])/float(max(len(t),len(translation[t]))) for t in translation])
-    score = calc_score(set([translation[a] if a in translation else a for a in result]),answer)
+    score = calc_score(set([translation[a] if a in translation else a for a in result]),answer)*len(answer)
 
     return score,translation
 
@@ -193,7 +200,9 @@ def calc_score(result, answer):
     len_result = len(result)
     len_answer = len(answer)
 
-    if len_result == len_answer and len_intersection == len_answer:
+    if len_union == 0:
+        return 0
+    elif len_result == len_answer and len_intersection == len_answer:
         m = 1.0
     elif len_intersection == len_result:
         # all results correspond to a correct answer, but some 
@@ -310,7 +319,6 @@ def main(filename):
     print "CALCULATING STRUCTURED SCORES"
     print "============================="
     print "Using the translations generated during unstructured scoring,\n you are scored for accurately matching nominees, presenters, and\nwinners to award names (also determined using the translations dictionary).\nAlso, for presenters and nominees, there are penalties for too many or\ntoo few answers.\n"
-    win_scores = []
     totals = {}
 
     for a in results['data']['structured']:
@@ -322,6 +330,7 @@ def main(filename):
                     if len(results['data']['structured'][a]['winner']) == 0:
                         size = 0
                         score = 0
+                        print "empty string for winner"
                     else:
                         size = weights['winners']['mappings']
                         winner = results['data']['structured'][a]['winner']
@@ -329,8 +338,6 @@ def main(filename):
                             score = size
                         else:
                             score = 0
-
-                    # print "\tWinner:\t%d"%score
                 else:
                     length = len(answers['structured'][translated][item])
                                        
@@ -339,7 +346,7 @@ def main(filename):
                     transitem = set([translation[r] if r in translation else r for r in results['data']['structured'][a][item]])
                     if item == "nominees":
                         transitem = (transitem - set(answers['structured'][translated]['winner'])) - set(results['data']['structured'][a]['winner'])
-                    score = calc_score(set(answers['structured'][translated][item]),transitem)*weights[item]['mappings']
+                    score = calc_score(set(answers['structured'][translated][item]),transitem)*size
                 if item not in scores['structured']:
                     scores['structured'][item] = score
                     totals[item] = size
