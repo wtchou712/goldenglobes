@@ -55,5 +55,5 @@ Approximate time for award search:
 2015 - 180s
 
 Approximate time for fun goal search:
-2013 - 
-2015 - 
+2013 - 60s
+2015 - 380s
