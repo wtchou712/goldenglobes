@@ -16,7 +16,7 @@ funGoals13.json,
 funGoals15.json,
 
 Packages and resources used:
-NLTK, all packages,
+NLTK (all packages),
 Tkinter (for GUI)
 
 How to run: 
@@ -57,9 +57,11 @@ bigrams or similar bigrams in the top 10 bigrams. This is repeated for all fun g
 Approximate time for award search: 
 
 2013 - 20s
+
 2015 - 180s
 
 Approximate time for fun goal search:
 
 2013 - 60s
+
 2015 - 380s
