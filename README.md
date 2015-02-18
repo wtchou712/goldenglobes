@@ -28,9 +28,11 @@ fun goals to view by year
 
 ***** NOTE *****
 
-There is already 2 answer files from our search in the folder called "gg13answers.json" and "gg15answers.json". The 
+There is already 2 answer files from the results of our search in the folder called "gg13answers.json" and "gg15answers.json". The 
 program will always run the search at startup, but if you would like to skip the search and just see how the gui 
 works, comment out line 6 in "main.py"
+
+Also, right now the corpus that are being searched is 'gg13.json' and 'gg15mini.json', provided by Larry and Miriam. If you would like to search a different json file (such as an extended corpus of 2013 or 2015), open up 'findwinners.py', on line 339 and 340 you will find a function 'findAllAwards' being called. The 5th argument of that function is the name of the input file, while the 6th argument is the name of the output file. 
 
 How our award search works: 
 

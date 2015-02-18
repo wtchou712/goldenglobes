@@ -46,7 +46,7 @@ def removeIgnored(phrase):
 def searchTweets(awards,nominees,inputFile):
 	print "Searching for top tweets for award winners..."
 	data = []
-	with open('../' + inputFile) as f:
+	with open(inputFile) as f:
 	    for line in f:
 	        data.append(json.loads(line))
 
@@ -148,7 +148,7 @@ def findWinner(topUnigrams, topBigrams, nominees):
 def searchFunGoals(keywords,inputFile):
 	print "Searching for top tweets for fun goals..."
 	data = []
-	with open('../' + inputFile) as f:
+	with open(inputFile) as f:
 	    for line in f:
 	        data.append(json.loads(line))
 	keyword_stopsets = []
