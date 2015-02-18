@@ -4,13 +4,9 @@ Golden Globes 2015
 Welcome to Team 7's Golden Globe Searcher
 
 Team Members: 
-
 William Chou
-
 Matt Schley
-
 Jeremy Chase
-
 Andrew Jiang
 
 JSON files: 	
