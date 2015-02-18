@@ -88,7 +88,7 @@ def searchTweets(awards,nominees,inputFile):
 						award_bigrams[i].append(bi)	
 		counter+=1
 		if counter%10000==0:#prints progress
-			print "Tweets scanned: " + str(counter)
+			print "Tweets scanned for award winners: " + str(counter)
 
 	winners =[]
 	for i in range(0,len(awards)):
@@ -188,7 +188,7 @@ def searchFunGoals(keywords,inputFile):
 							keyword_unigrams[i].append(token[0])
 		counter+=1
 		if counter%10000==0:#prints progress 
-			print "Tweets scanned: " + str(counter)
+			print "Tweets scanned for fun goals: " + str(counter)
 
 	results =[]
 	#this loop goes through each fun goal search term

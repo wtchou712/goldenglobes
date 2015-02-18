@@ -325,21 +325,22 @@ def findAllAwards(year, allNominees, awardsList, presenterList, inputFile, outpu
 
 #finds all the answers to the fun goals
 def funGoals(keywords, inputFile,outputName):
+	print "Searching for fun goals..."
 	start_time = time.time()
 	results = searchFunGoals(keywords,inputFile)
 	data = {}
 	data['answers'] = results
 	elapsed_time = time.time() - start_time
-	print "Search length: " + str(elapsed_time)
+	print "Search length for fun goals: " + str(elapsed_time)
 
 	with open(outputName, 'w') as outfile: 
 		json.dump(OrderedDict(data), outfile)
 
 findAllAwards(2013, allNominees13,awardsList13, presenters13, 'gg2013.json','gg13answers.json')
-# findAllAwards(2015, allNominees15,awardsList15, presenters15, 'gg15mini.json','gg15answers.json')
+findAllAwards(2015, allNominees15,awardsList15, presenters15, 'gg15mini.json','gg15answers.json')
 
-# funGoals(funGoalSearchList, 'gg2013.json', 'funGoals13.json')
-# funGoals(funGoalSearchList, 'gg15mini.json', 'funGoals15.json')
+funGoals(funGoalSearchList, 'gg2013.json', 'funGoals13.json')
+funGoals(funGoalSearchList, 'gg15mini.json', 'funGoals15.json')
 	
 
 
