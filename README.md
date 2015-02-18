@@ -1,14 +1,14 @@
 Welcome to Team 7's Golden Globe Searcher
 
-Team Members: William Chou
-			  Matt Schley
-			  Jeremy Chase
-			  Andrew Jiang
+Team Members: 	William Chou
+		Matt Schley
+		Jeremy Chase
+		Andrew Jiang
 
-JSON files: gg13answers.json
-			gg15answers.json
-			funGoals13.json
-			funGoals15.json
+JSON files: 	gg13answers.json
+		gg15answers.json
+		funGoals13.json
+		funGoals15.json
 
 Packages and resources used:
 NLTK, all packages
